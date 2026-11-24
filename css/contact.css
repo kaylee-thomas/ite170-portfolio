@@ -1,0 +1,610 @@
+/* ============================================================
+   contact.css — stylesheet for the Contact page of my portfolio
+   (ITE 170, NOVA Annandale). Styles the header/nav, hero banner,
+   contact info cards, message form, social links, footer, and
+   all the hover/scroll animations used on the page.
+   ============================================================ */
+
+/* ===== COLOR VARIABLES & GLOBAL RESET ===== */
+
+    /* :root defines reusable CSS variables (custom properties) for the
+       whole site — change a color here and it updates everywhere it is
+       used with var(--name). */
+    :root {
+      --purple: #142338;
+      --blue:   #344A60;
+      --accent: #C5A46D;      /* main accent color (same as purple) */
+      --accent-dark: #142338;  /* darker accent for hover states */
+      --ink:    #111111;
+      --light-bg: #f5f5f7;
+      --white:  #ffffff;
+      --soft-border: #e0e0e5;
+      --card-shadow: 0 18px 45px rgba(0,0,0,0.10);
+    }
+    /* Reset: remove every browser's default margins/padding, and make
+       width/height include padding + border (box-sizing) so sizing is predictable */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    /* Base look of the whole page: font stack, light gray background,
+       near-black text, comfortable line spacing. overflow-x:hidden stops
+       accidental sideways scrolling. */
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light-bg);
+      color: var(--ink);
+      overflow-x: hidden;
+      line-height: 1.6; 
+    }
+
+    /* Heading font to match the rest of my portfolio */
+    h1, h2, h3 {
+      font-family: 'Playfair Display', Georgia, serif;
+    }
+
+    /* Makes in-page anchor links glide smoothly instead of jumping */
+    html { scroll-behavior: smooth; }
+    /* Images never overflow their container and lose the odd gap
+       caused by inline display */
+    img { max-width:100%; display:block; }
+
+/* ===== HEADER / DESKTOP NAV ===== */
+
+    /* The top navigation bar. position:fixed pins it to the top of the
+       screen even when you scroll. backdrop-filter:blur(20px) blurs the
+       content that scrolls underneath it (frosted-glass effect); the
+       -webkit- version is for Safari. z-index:1000 keeps it above
+       everything else on the page. */
+    header {
+      position:fixed; top:0; left:0; width:100%; height:64px;
+      background:rgba(245,245,247,0.96); backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(0,0,0,0.06);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 32px; z-index:1000;
+    }
+    /* Site name in the top-left; the <span> part gets the accent purple */
+    .brand { font-weight:700; font-size:1rem; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+    .brand span { color:var(--purple); }
+    /* Row of desktop nav links, evenly spaced with flexbox */
+    .desktop-nav { display:flex; gap:28px; font-size:.95rem; }
+    /* Links are slightly faded until hovered (transition = smooth change) */
+    .desktop-nav a { text-decoration:none; color:#333; opacity:.8; transition:opacity .2s,color .2s; }
+    .desktop-nav a:hover { opacity:1; color:var(--blue); }
+    /* The current page's link is purple and bold */
+    .desktop-nav a.active { color:var(--purple); opacity:1; font-weight:600; }
+
+/* ===== MOBILE HAMBURGER BUTTON ===== */
+
+    /* Round hamburger button. display:none hides it on desktop —
+       the media query at the bottom switches it on for small screens. */
+    .mobile-toggle {
+      display:none; width:36px; height:36px; border-radius:50%;
+      border:1px solid rgba(0,0,0,.15); background:#fff; cursor:pointer;
+      align-items:center; justify-content:center; flex-direction:column; gap:4px;
+    }
+    /* The three hamburger lines are drawn with ONE <span>:
+       the span itself is the middle bar, and its ::before / ::after
+       pseudo-elements are the top and bottom bars. */
+    .mobile-toggle span,.mobile-toggle span::before,.mobile-toggle span::after {
+      width:18px; height:2px; background:#111; border-radius:2px; display:block;
+    }
+    .mobile-toggle span { position:relative; }
+    /* Position the top bar 5px above and the bottom bar 5px below the middle */
+    .mobile-toggle span::before { content:""; position:absolute; top:-5px; left:0; }
+    .mobile-toggle span::after  { content:""; position:absolute; top:5px;  left:0; }
+
+/* ===== MOBILE SLIDE-IN MENU ===== */
+
+    /* Dark panel that slides in from the right on phones.
+       right:-100% parks it completely off-screen; the .open class
+       (added by JavaScript) moves it to right:0, and the transition
+       animates the slide. */
+    .mobile-nav {
+      position:fixed; top:0; right:-100%; width:72%; max-width:320px; height:100vh;
+      background:rgba(5,5,9,.95); backdrop-filter:blur(20px);
+      display:flex; flex-direction:column; padding:96px 32px;
+      transition:right .35s ease; z-index:999;
+    }
+    .mobile-nav.open { right:0; }
+    /* Big white menu links stacked vertically */
+    .mobile-nav a { text-decoration:none; color:#fff; font-size:1.5rem; font-weight:600; margin-bottom:1.4rem; transition:color .2s; }
+    .mobile-nav a:hover, .mobile-nav a.active { color:#fff; text-decoration:underline; text-underline-offset:6px; }
+
+/* ===== PAGE HERO (top banner) ===== */
+
+    /* Dark banner across the top of the page. position:relative makes it
+       the anchor for the absolutely-positioned image/overlay layers inside;
+       overflow:hidden clips anything that sticks out. */
+    .page-hero {
+      background:#050509; padding:120px 24px 80px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+
+    /* The hero background photo. inset:0 is shorthand for
+       top/right/bottom/left all = 0, stretching it over the whole hero.
+       object-fit:cover scales the photo to FILL the area without
+       squishing it (edges get cropped instead). z-index:0 puts it on the
+       bottom layer; opacity dims it so text stays readable. */
+    .page-hero-media {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      z-index:0;
+      opacity:1;   /* full strength: your picture is the point */
+    }
+
+    /* Alternative hero style (not used on this page): animated colorful
+       "aurora" made of three overlapping radial gradients that slowly
+       drift thanks to the ct-aurora animation. */
+    .page-hero.hero-gradient::before {
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 25% 65%, color-mix(in srgb, var(--purple) 55%, transparent), transparent 55%),
+        radial-gradient(circle at 75% 35%, color-mix(in srgb, var(--blue) 50%, transparent), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(236,72,153,.20), transparent 60%);
+      background-size:200% 200%;
+      animation: ct-aurora 14s ease-in-out infinite alternate;
+      z-index:0;
+    }
+    /* Animation: slides the gradient layers from one corner to the other
+       and back (14s, forever), creating the drifting-light effect. */
+    @keyframes ct-aurora {
+      0%   { background-position:   0% 0%, 100% 100%, 50% 50%; }
+      100% { background-position: 100% 100%,  0%  0%, 50% 50%; }
+    }
+
+    /* Dark gradient overlay laid on top of the hero photo/video
+       (z-index:1 = above the image, below the text) so the white
+       headline text is easy to read. */
+    .page-hero.hero-image::after,
+    .page-hero.hero-video::after {
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(180deg,
+        rgba(5,5,9,.56) 0%,
+        rgba(5,5,9,.64) 100%);
+      z-index:1;
+    }
+
+    /* Hero text block — z-index:2 puts it on the TOP layer,
+       above both the photo (0) and the dark overlay (1). */
+    .page-hero-content { position:relative; z-index:2; max-width:700px; margin:0 auto; }
+    /* Small purple "Get in Touch" pill above the headline */
+    .page-hero-eyebrow {
+      display:inline-block; font-size:.875rem; font-weight:600; letter-spacing:.12em;
+      text-transform:uppercase; color:#fff; background:rgba(255,255,255,.12);
+      border:1px solid color-mix(in srgb, var(--purple) 30%, transparent); padding:5px 14px; border-radius:999px; margin-bottom:20px;
+    }
+    /* Headline. clamp(min, preferred, max) makes the font size responsive:
+       never smaller than 2.4rem, never bigger than 3.8rem, and scales
+       with the viewport width (5vw) in between. */
+    .page-hero h1 { font-size:clamp(2.4rem,5vw,3.8rem); font-weight:800; color:#fff; line-height:1.1; margin-bottom:16px; }
+    /* Subtitle under the headline — semi-transparent white */
+    .page-hero p  { font-size:1.15rem; color:#fff; max-width:500px; margin:0 auto; }
+
+/* ===== CONTACT SECTION (info + form layout) ===== */
+
+    /* White band that holds the contact info and the form */
+    .contact-section {
+      background: var(--white);
+      padding: 80px 24px 100px;
+      border-top: 1px solid var(--soft-border);
+    }
+
+    /* Two-column CSS Grid: left column (info) is 1 share wide,
+       right column (form) is 1.4 shares — so the form gets more room.
+       Collapses to one column on small screens (see media query). */
+    .contact-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 64px;
+      align-items: start;
+    }
+
+    /* Left column: stacks the intro text and the contact cards vertically */
+    .contact-info { display:flex; flex-direction:column; gap:32px; }
+
+    /* Small uppercase purple label above section headings */
+    .section-label {
+      display:block; font-size:.875rem; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase; color:var(--purple); margin-bottom:6px;
+    }
+    /* "Let's connect" heading and intro paragraph */
+    .contact-info h2 { font-size:2.2rem; font-weight:800; line-height:1.15; margin-bottom:14px; }
+    .contact-info p  { font-size:1.05rem; color:#444; line-height:1.7; }
+
+/* ===== CONTACT METHOD CARDS (email / school / LinkedIn) ===== */
+
+    /* One rounded card per contact method: icon on the left,
+       label + value on the right (flexbox row). */
+    .contact-method {
+      display:flex; align-items:center; gap:20px;      padding:22px 24px; border-radius:18px;
+      background:var(--light-bg); border:1px solid var(--soft-border);
+      transition:transform .3s,box-shadow .3s;
+    }
+    /* Hover effect: translateY(-4px) lifts the card up slightly
+       and a shadow appears, so it feels clickable */
+    .contact-method:hover { transform:translateY(-4px); box-shadow:var(--card-shadow); }
+
+    /* Square tile in one solid color holding the icon.
+       place-items:center centers the icon; flex-shrink:0 stops the
+       tile from being squeezed when text is long. */
+    .method-icon {
+      width:72px; height:72px; border-radius:18px;
+      background:var(--purple);
+      display:grid; place-items:center;
+      flex-shrink:0;
+      color:#fff;
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--purple) 28%, transparent);
+    }
+    /* Sizes the Phosphor icon font inside the tile */
+    .method-icon i {
+      display:block;
+      color:#fff;
+      font-size:2.25rem;
+      line-height:1;
+    }
+    /* The icon glyph itself lives in the ::before pseudo-element of <i> */
+    .method-icon i::before {
+      display:block;
+      line-height:1;
+    }
+    /* Card text: small uppercase label (e.g. "Email") + the actual value */
+    .method-info .method-type { font-size:.875rem; font-weight:700; color:var(--purple); letter-spacing:.06em; text-transform:uppercase; margin-bottom:2px; }
+    .method-info .method-value { font-size:.95rem; font-weight:500; color:#111; }
+    /* Links inside cards are blue; underline only on hover */
+    .method-info .method-value a { color:var(--accent); text-decoration:none; }   /* darker blue: 4.5:1 or more on white */
+    .method-info .method-value a:hover { text-decoration:underline; }
+
+/* ===== CONTACT FORM ===== */
+
+    /* White rounded card that contains the whole form */
+    .contact-form-wrap {
+      background: var(--white);
+      border: 1px solid var(--soft-border);
+      border-radius: 24px;
+      padding: 40px 36px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    }
+
+    /* "Send a message" heading and the smaller line under it */
+    .form-title {
+      font-size:1.4rem; font-weight:700; margin-bottom:6px;
+    }
+    .form-subtitle {
+      font-size:.92rem; color:#666; margin-bottom:28px;
+    }
+
+    /* One label + input pair, stacked vertically with a small gap */
+    .form-group {
+      display:flex; flex-direction:column; gap:6px; margin-bottom:20px;
+    }
+
+    /* Field labels */
+    .form-group label {
+      font-size:.88rem; font-weight:600; color:#333;
+    }
+
+    /* Shared look for text boxes, the drop-down, and the textarea.
+       outline:none removes the default focus ring because we draw our
+       own focus style below; font-family:inherit makes the fields use
+       the page font instead of the browser default. */
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width:100%;
+      padding:13px 16px;
+      border-radius:12px;
+      border:1.5px solid var(--soft-border);
+      font-size:.95rem;
+      font-family:inherit;
+      color:var(--ink);
+      background:var(--white);
+      outline:none;
+      transition:border-color .2s, box-shadow .2s;
+    }
+
+    /* :focus = when the user clicks/tabs into a field. The border turns
+       purple and a soft purple ring (box-shadow) appears — this replaces
+       the default outline we removed, keeping the form keyboard-accessible. */
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color:var(--purple);
+      box-shadow:0 0 0 3px color-mix(in srgb, var(--purple) 12%, transparent);
+    }
+
+    /* Message box: user may drag it taller but not sideways */
+    .form-group textarea { resize:vertical; min-height:140px; }
+
+    /* Puts First Name and Last Name side by side in two equal columns */
+    .form-row {
+      display:grid; grid-template-columns:1fr 1fr; gap:16px;
+    }
+
+    /* Purple "Send Message" button, full width of the form */
+    .btn-submit {
+      width:100%; padding:15px;
+      border-radius:12px; border:none;
+      background:var(--purple); color:#fff;
+      font-size:1rem; font-weight:600; font-family:inherit;
+      cursor:pointer;
+      transition:background .25s, transform .2s, box-shadow .2s;
+      margin-top:6px;
+    }
+    /* Hover: darker purple, lifts up 2px, glowing shadow */
+    .btn-submit:hover {
+      background:var(--accent-dark);
+      transform:translateY(-2px);
+      box-shadow:0 8px 24px color-mix(in srgb, var(--purple) 35%, transparent);
+    }
+    /* While the mouse button is held down, the button drops back down —
+       gives a "pressed" feel */
+    .btn-submit:active { transform:translateY(0); }
+
+/* ===== SOCIAL LINKS SECTION ===== */
+
+    /* Light gray centered band under the contact form */
+    .social-section {
+      background: var(--light-bg);
+      border-top:1px solid var(--soft-border);
+      padding:60px 24px;
+      text-align:center;
+    }
+    .social-inner { max-width:700px; margin:0 auto; }
+    .social-inner h2 { font-size:1.8rem; font-weight:800; margin:6px 0 12px; }
+    .social-inner p  { font-size:1rem; color:#555; margin-bottom:32px; }
+
+    /* Row of social buttons; flex-wrap lets them wrap onto a new line
+       on narrow screens */
+    .social-links {
+      display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+    }
+
+    /* Pill-shaped button (border-radius:999px = fully rounded ends)
+       with an icon and the site name */
+    .social-link {
+      display:inline-flex; align-items:center; justify-content:center; gap:12px;
+      padding:14px 26px; border-radius:999px;
+      background:var(--white); border:1px solid var(--soft-border);
+      text-decoration:none; color:var(--ink); font-weight:600; font-size:1rem;
+      transition:transform .25s,box-shadow .25s,border-color .25s;
+    }
+    /* Hover: lifts up, gains a shadow, and the border turns purple */
+    .social-link:hover {
+      transform:translateY(-4px);
+      box-shadow:var(--card-shadow);
+      border-color:var(--purple);
+    }
+    /* Purple icon inside the pill, centered with grid */
+    .social-link-icon {
+      display:grid; place-items:center;
+      font-size:1.6rem; line-height:1; color:var(--purple);
+    }
+    .social-link-icon i {
+      display:block;
+      font-size:1.6rem;
+      line-height:1;
+    }
+    /* The icon glyph itself lives in the ::before pseudo-element of <i> */
+    .social-link-icon i::before {
+      display:block;
+      line-height:1;
+    }
+
+/* ===== FORM SUCCESS MESSAGE ===== */
+
+    /* Green-bordered "Message sent!" box. display:none hides it until
+       JavaScript adds the .show class after a successful submit. */
+    .success-message {
+      display:none;      background:var(--light-bg);
+      border:1.5px solid #22c55e;
+      border-radius:16px; padding:24px;
+      text-align:center; margin-top:20px;
+    }
+    .success-message.show { display:block; }
+    /* Dark green heading and text inside the box */
+    .success-message h3 { font-size:1.2rem; color:#166534; margin-bottom:6px; }
+    .success-message p  { font-size:.92rem; color:#166534; }
+
+/* ===== CTA BAND & FOOTER ===== */
+
+    /* Closing "Thanks for visiting" strip near the bottom of the page */
+    .cta-band {
+      background:var(--white); border-top:1px solid var(--soft-border); padding:80px 24px;
+    }
+    /* Lays out the CTA text (and any button) in a row; wraps on small screens */
+    .cta-inner {
+      max-width:1180px; margin:0 auto;
+      display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap;
+    }
+    .cta-text h2 { font-size:2rem; font-weight:800; margin-bottom:10px; }
+    .cta-text p  { color:#555; max-width:480px; }
+    /* Reusable purple pill button (shared with other pages) */
+    .btn-primary {
+      display:inline-block; padding:14px 30px; border-radius:999px;
+      background:var(--purple); color:#fff; text-decoration:none;
+      font-weight:600; font-size:1rem; transition:background .25s,transform .25s;
+    }
+    .btn-primary:hover { background:var(--accent-dark); transform:translateY(-3px); }
+    /* Black footer bar with small gray copyright text */
+    footer { background:#000; color:#9ca3af; text-align:center; padding:20px; font-size:.875rem; }
+
+/* ===== SCROLL-IN FADE ANIMATION ===== */
+
+    /* Elements with .fade-up start invisible and shifted 40px down.
+       When JavaScript sees them scroll into view it adds .visible,
+       and the transition fades them in while sliding them up. */
+    .fade-up { opacity:0; transform:translateY(40px); transition:opacity .8s ease,transform .8s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+
+/* ===== RESPONSIVE BREAKPOINTS (media queries) ===== */
+
+    /* Tablets and below (900px or narrower): swap the desktop nav for the
+       hamburger button, stack the contact info and form in ONE column,
+       shrink the form padding, and center the CTA content. */
+    @media(max-width:900px){
+      .desktop-nav { display:none; }
+      .mobile-toggle { display:flex; }
+      .contact-inner { grid-template-columns:1fr; }
+      .contact-form-wrap { padding:28px 22px; }
+      .cta-inner { flex-direction:column; text-align:center; }
+    }
+    /* Phones (600px or narrower): stack First/Last name fields on top of
+       each other and reduce the hero padding to fit the smaller screen. */
+    @media(max-width:600px){
+      .form-row { grid-template-columns:1fr; }
+      .page-hero { padding:100px 16px 60px; }
+    }
+
+/* ===== KEYFRAME ANIMATIONS ===== */
+
+    /* float: gently bobs an element up 5px and back down (used on the
+       hero eyebrow pill) */
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-5px); }
+    }
+    /* pulse-glow: a purple ring (box-shadow) grows outward and fades,
+       like a radar ping (used on the section-label dot) */
+    @keyframes pulse-glow {
+      0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--purple) 50%, transparent); }
+      50%     { box-shadow: 0 0 0 8px color-mix(in srgb, var(--purple) 0%, transparent); }
+    }
+    /* wiggle: quickly rocks an element left and right by 6 degrees
+       (used on the contact-card icons when hovered) */
+    @keyframes wiggle {
+      0%,100% { transform: rotate(0); }
+      25%     { transform: rotate(-6deg); }
+      75%     { transform: rotate(6deg); }
+    }
+
+/* ===== EXTRA HOVER & MOTION POLISH ===== */
+/* The rules below layer additional animation details on top of the
+   base styles defined earlier in the file. */
+
+    /* Animated underline for desktop nav links: an invisible 0-width bar
+       (::after) sits under each link and grows to full width on hover.
+       Starting at left:50% and moving to left:0 makes it grow outward
+       from the center. */
+    .desktop-nav a { position: relative; }
+    .desktop-nav a::after {
+      content: ""; position: absolute; left: 50%; bottom: -4px;
+      width: 0; height: 2px; background: var(--blue);
+      transition: width .3s ease, left .3s ease;
+    }
+    .desktop-nav a:hover::after,
+    .desktop-nav a.active::after { width: 100%; left: 0; }
+    /* The current page's underline is purple instead of blue */
+    .desktop-nav a.active::after { background: var(--purple); }
+
+    /* The colored part of the logo shifts purple -> blue on hover */
+    .brand span { transition: color .3s ease; }
+    .brand:hover span { color: var(--blue); }
+
+    /* Adds a small pulsing dot to the left of each section label.
+       translateY(-50%) vertically centers the dot on the text line. */
+    .section-label { position: relative; padding-left: 16px; }
+    .section-label::before {
+      content: ""; position: absolute; left: 0; top: 50%;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); transform: translateY(-50%);
+      animation: pulse-glow 2.2s ease-out infinite;
+    }
+
+    /* The "Get in Touch" pill slowly floats up and down forever */
+    .page-hero-eyebrow { animation: float 4s ease-in-out infinite; }
+
+    /* Refines the contact-card hover (overrides the earlier version):
+       also animates the border color */
+    .contact-method {
+      transition: transform .3s ease, box-shadow .3s ease,
+                  border-color .3s ease;
+    }
+    .contact-method:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+      border-color: color-mix(in srgb, var(--purple) 35%, transparent);
+    }
+    /* Hovering a contact card makes its icon tile wiggle */
+    .method-icon { transition: transform .3s ease; }
+    .contact-method:hover .method-icon { animation: wiggle .6s ease-in-out; }
+
+    /* Form fields also animate a tiny upward movement... */
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      transition: border-color .25s ease, box-shadow .25s ease,
+                  transform .25s ease;
+    }
+    /* ...rising 1px when focused, so the active field feels "picked up" */
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      transform: translateY(-1px);
+    }
+
+    /* Social pills lift AND grow 4% on hover (scale = zoom) */
+    .social-link {
+      transition: transform .25s ease, background .25s ease, color .25s ease;
+    }
+    .social-link:hover { transform: translateY(-3px) scale(1.04); }
+
+    /* Button "shine" effect: a diagonal white streak (::before) starts
+       off-screen to the left (-120%) and sweeps across to the right
+       (140%) on hover, like light glinting off the button.
+       overflow:hidden keeps the streak inside the button shape. */
+    .btn-primary, .btn-submit { position: relative; overflow: hidden; }
+    .btn-primary::before, .btn-submit::before {
+      content: ""; position: absolute; top: 0; left: -120%;
+      width: 60%; height: 100%;
+      background: linear-gradient(120deg,
+        transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      transition: left .7s ease;
+    }
+    .btn-primary:hover::before, .btn-submit:hover::before { left: 140%; }
+
+    /* Hamburger bars shrink slightly on hover (only applies if the
+       bars use a .bar class) */
+    .mobile-toggle .bar { transition: transform .3s ease; }
+    .mobile-toggle:hover .bar { transform: scaleX(.7); }
+    /* Mobile menu links start invisible and shifted 20px right... */
+    .mobile-nav a {
+      opacity: 0; transform: translateX(20px);
+      transition: color .2s, padding-left .2s,
+                  opacity .4s ease, transform .4s ease;
+    }
+    /* ...and slide in when the menu opens. Each link gets a slightly
+       longer delay than the one before, creating a staggered
+       one-after-another entrance. */
+    .mobile-nav.open a { opacity: 1; transform: translateX(0); }
+    .mobile-nav.open a:nth-of-type(1) { transition-delay: .10s; }
+    .mobile-nav.open a:nth-of-type(2) { transition-delay: .16s; }
+    .mobile-nav.open a:nth-of-type(3) { transition-delay: .22s; }
+    .mobile-nav.open a:nth-of-type(4) { transition-delay: .28s; }
+    .mobile-nav.open a:nth-of-type(5) { transition-delay: .34s; }
+
+/* ===== ACCESSIBILITY: REDUCED MOTION ===== */
+
+    /* If the user's device is set to "reduce motion" (an accessibility
+       preference), make every animation and transition nearly instant
+       so the page doesn't move around. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+
+    /* ===== CLEANUP: styles moved out of inline style="" attributes ===== */
+    .page-main { padding-top:64px; }
+    /* Closing band: heading and text centered */
+    .cta-centered { justify-content:center; }
+    .cta-centered .cta-text { text-align:center; width:100%; }
+    .cta-centered .cta-text p { margin-left:auto; margin-right:auto; }
+
+    /* Keep the contact form visible below the fixed navigation */
+    #contactForm {
+      scroll-margin-top: 130px;
+    }

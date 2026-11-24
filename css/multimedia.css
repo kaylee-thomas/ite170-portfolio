@@ -1,0 +1,779 @@
+/* ==========================================================================
+   multimedia.css — Stylesheet for the Multimedia page of my portfolio site
+   (ITE 170). Controls the layout, colors, animations, and responsive
+   behavior for the header/nav, hero banner, video/photo/audio galleries,
+   tools grid, call-to-action band, footer, and the photo lightbox.
+   ========================================================================== */
+
+    /* ===== SITE-WIDE VARIABLES & RESET ===== */
+
+    /* CSS custom properties (variables) — the site's color palette and a
+       reusable shadow. Used later with var(--name) so colors stay
+       consistent and are easy to change in one place. */
+    :root {
+      --purple: #142338;
+      --blue:   #344A60;
+      --accent: #C5A46D;       /* main accent color (same as purple) */
+      --accent-dark: #142338;   /* darker accent for hover states */
+      --ink:    #111111;
+      --light-bg: #f5f5f7;
+      --white:  #ffffff;
+      --soft-border: #e0e0e5;
+      --card-shadow: 0 18px 45px rgba(0,0,0,0.12);
+    }
+    /* Reset: remove default browser spacing on every element.
+       box-sizing:border-box makes width include padding + border,
+       which makes layout math predictable. */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    /* Base page styles: system font stack, light gray background,
+       near-black text, comfortable line spacing.
+       overflow-x:hidden prevents accidental sideways scrolling. */
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light-bg);
+      color: var(--ink);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    /* Makes in-page anchor links glide smoothly instead of jumping */
+    html { scroll-behavior: smooth; }
+    /* Media never overflows its container; display:block removes the small
+       gap browsers leave under inline images */
+    img, video { max-width:100%; display:block; }
+
+    /* ===== HEADER / DESKTOP NAV ===== */
+
+    /* Fixed top bar: stays pinned while scrolling (position:fixed).
+       backdrop-filter:blur() frosts whatever scrolls behind it (the
+       -webkit- version is for Safari). z-index:1000 keeps it stacked
+       above the page content. Flexbox spreads brand and nav apart. */
+    header {
+      position:fixed; top:0; left:0; width:100%; height:64px;
+      background:rgba(245,245,247,0.96); backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(0,0,0,0.06);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 32px; z-index:1000;
+    }
+    /* Site name in the header; the <span> part is highlighted purple */
+    .brand { font-weight:700; font-size:1rem; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+    .brand span { color:var(--purple); }
+    /* Row of nav links with even spacing between them */
+    .desktop-nav { display:flex; gap:28px; font-size:.95rem; }
+    /* Nav links: slightly faded until hovered, with a smooth color change */
+    .desktop-nav a { text-decoration:none; color:#333; opacity:.8; transition:opacity .2s,color .2s; }
+    .desktop-nav a:hover { opacity:1; color:var(--blue); }
+    /* The link for the page you are currently on is purple and bold */
+    .desktop-nav a.active { color:var(--purple); opacity:1; font-weight:600; }
+
+    /* ===== MOBILE NAV (hamburger menu) ===== */
+
+    /* Round hamburger button. display:none hides it on desktop —
+       a media query near the bottom turns it on for small screens. */
+    .mobile-toggle {
+      display:none; width:36px; height:36px; border-radius:50%;
+      border:1px solid rgba(0,0,0,.15); background:#fff; cursor:pointer;
+      align-items:center; justify-content:center; flex-direction:column; gap:4px;
+    }
+    /* The three hamburger lines: one real <span> plus ::before/::after
+       pseudo-elements positioned 5px above and below it */
+    .mobile-toggle span,.mobile-toggle span::before,.mobile-toggle span::after {
+      width:18px; height:2px; background:#111; border-radius:2px; display:block;
+    }
+    .mobile-toggle span { position:relative; }
+    .mobile-toggle span::before { content:""; position:absolute; top:-5px; left:0; }
+    .mobile-toggle span::after  { content:""; position:absolute; top:5px;  left:0; }
+    /* Slide-in menu panel: parked off-screen (right:-100%) until the
+       "open" class moves it to right:0. The transition animates the slide.
+       Dark semi-transparent background with a blur behind it. */
+    .mobile-nav {
+      position:fixed; top:0; right:-100%; width:72%; max-width:320px; height:100vh;
+      background:rgba(5,5,9,.95); backdrop-filter:blur(20px);
+      display:flex; flex-direction:column; padding:96px 32px;
+      transition:right .35s ease; z-index:999;
+    }
+    /* JavaScript adds .open to slide the menu into view */
+    .mobile-nav.open { right:0; }
+    /* Big white menu links; current page / hovered link turns purple */
+    .mobile-nav a { text-decoration:none; color:#fff; font-size:1.5rem; font-weight:600; margin-bottom:1.4rem; transition:color .2s; }
+    .mobile-nav a:hover, .mobile-nav a.active { color:#fff; text-decoration:underline; text-underline-offset:6px; }
+
+    /* ===== PAGE HERO (top banner) ===== */
+
+    /* Dark banner at the top of the page. position:relative makes it the
+       anchor for the absolutely-positioned image/overlay layers inside;
+       overflow:hidden clips anything sticking out. */
+    .page-hero {
+      background:#050509; padding:120px 24px 80px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+
+    /* Hero background image. inset:0 is shorthand for
+       top/right/bottom/left all 0, stretching it edge to edge.
+       object-fit:cover fills the space without squishing (crops instead).
+       z-index:0 puts it behind the text; opacity dims it. */
+    .page-hero-media {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      z-index:0;
+      opacity:1;   /* full strength: your picture is the point */
+    }
+
+    /* Alternative hero style (hero-gradient class): animated colorful
+       "aurora" made of three layered radial gradients. The oversized
+       background (200%) slides around via the animation below. */
+    .page-hero.hero-gradient::before {
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 20% 70%, color-mix(in srgb, var(--purple) 55%, transparent), transparent 55%),
+        radial-gradient(circle at 80% 30%, color-mix(in srgb, var(--blue) 50%, transparent), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(236,72,153,.20), transparent 60%);
+      background-size:200% 200%;
+      animation: mm-aurora 14s ease-in-out infinite alternate;
+      z-index:0;
+    }
+    /* Slowly drifts the gradient blobs from one corner to the other and
+       back (the animation alternates direction) */
+    @keyframes mm-aurora {
+      0%   { background-position:   0% 0%, 100% 100%, 50% 50%; }
+      100% { background-position: 100% 100%,  0%  0%, 50% 50%; }
+    }
+
+    /* Dark gradient overlay laid on top of the hero image/video
+       (z-index:1, above the media at 0 but below the text at 2)
+       so the white text stays readable */
+    .page-hero.hero-image::after,
+    .page-hero.hero-video::after {
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(180deg,
+        rgba(5,5,9,.56) 0%,
+        rgba(5,5,9,.64) 100%);
+      z-index:1;
+    }
+
+    /* Hero text block — z-index:2 keeps it above the image and overlay */
+    .page-hero-content { position:relative; z-index:2; max-width:700px; margin:0 auto; }
+    /* Small pill-shaped label above the title ("Creative Work") */
+    .page-hero-eyebrow {
+      display:inline-block; font-size:.875rem; font-weight:600; letter-spacing:.12em;
+      text-transform:uppercase; color:#fff; background:rgba(255,255,255,.12);
+      border:1px solid color-mix(in srgb, var(--purple) 30%, transparent); padding:5px 14px; border-radius:999px; margin-bottom:20px;
+    }
+    /* Page title. clamp(min, preferred, max) makes the font size scale
+       with the screen width but never smaller than 2.4rem or bigger
+       than 3.8rem — responsive type without media queries. */
+    .page-hero h1 { font-size:clamp(2.4rem,5vw,3.8rem); font-weight:800; color:#fff; line-height:1.1; margin-bottom:16px; }
+    /* Hero intro sentence, slightly transparent white */
+    .page-hero p  { font-size:1.15rem; color:#fff; max-width:500px; margin:0 auto; }
+
+    /* ===== SCROLLING MEDIA STRIP (auto-scrolling filmstrip) =====
+       Not currently used in the HTML, but ready if a filmstrip of
+       thumbnails is added. */
+
+    /* Dark band that hides the moving track's overflow */
+    .scrolling-strip {
+      background: #050509;
+      padding: 28px 0;
+      overflow: hidden;
+      position: relative;
+      border-top: 1px solid rgba(255,255,255,.06);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+    /* Fade-out gradients on the left and right edges so tiles appear to
+       melt into the background. pointer-events:none lets clicks pass through. */
+    .scrolling-strip::before,
+    .scrolling-strip::after {
+      content: ""; position: absolute; top: 0; bottom: 0; width: 80px;
+      pointer-events: none; z-index: 2;
+    }
+    .scrolling-strip::before { left: 0;  background: linear-gradient(90deg, #050509, transparent); }
+    .scrolling-strip::after  { right: 0; background: linear-gradient(-90deg, #050509, transparent); }
+
+    /* The row of tiles. width:max-content lets it grow as wide as its
+       tiles; the animation slides it left forever. */
+    .scroll-track {
+      display: flex; gap: 18px; width: max-content;
+      animation: mm-scroll 35s linear infinite;
+    }
+    /* Pause the scrolling when the user hovers over the strip */
+    .scrolling-strip:hover .scroll-track { animation-play-state: paused; }
+
+    /* Moves the track left by half its width. If the tiles are duplicated
+       once, ending at -50% looks identical to the start, creating a
+       seamless infinite loop. */
+    @keyframes mm-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }    }
+
+    /* One tile in the strip: fixed size, rounded, gradient placeholder
+       background. flex-shrink:0 stops flexbox squeezing tiles smaller. */
+    .scroll-tile {
+      width: 240px; height: 160px; border-radius: 16px;
+      overflow: hidden; flex-shrink: 0;
+      background: color-mix(in srgb, var(--purple) 25%, #0c0c12);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,.35); font-size: .875rem; text-align: center; padding: 10px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.3);
+      position: relative;
+      transition: transform .35s ease;
+    }
+    /* Tile grows slightly on hover */
+    .scroll-tile:hover { transform: scale(1.04); }
+    /* Media inside a tile fills it completely (cover = crop, don't squish) */
+    .scroll-tile img,
+    .scroll-tile video {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    /* Caption pinned to the bottom of a tile, hidden until hover */
+    .scroll-tile-caption {
+      position: absolute; left: 0; right: 0; bottom: 0;
+      padding: 10px 12px;
+      background: linear-gradient(to top, rgba(0,0,0,.75), transparent);
+      color: #fff; font-size: .875rem; font-weight: 500;
+      opacity: 0; transition: opacity .25s;
+    }
+    .scroll-tile:hover .scroll-tile-caption { opacity: 1; }
+
+    /* On phones: smaller tiles and a slightly faster scroll */
+    @media (max-width: 600px) {
+      .scroll-tile { width: 180px; height: 120px; }
+      .scroll-track { animation-duration: 28s; }
+    }
+
+    /* ===== MEDIA TABS =====
+       Styles for a tab bar (Video / Photos / Audio). position:sticky
+       makes it cling just below the 64px fixed header while scrolling.
+       (The current HTML shows all sections at once, but these styles
+       support a tabbed layout.) */
+    .media-tabs {
+      background:var(--white); border-bottom:1px solid var(--soft-border);
+      padding:0 24px; position:sticky; top:64px; z-index:100;
+    }
+    /* Centers the tabs; overflow-x:auto lets them scroll sideways on
+       narrow screens instead of wrapping */
+    .media-tabs-inner {
+      max-width:1180px; margin:0 auto; display:flex; overflow-x:auto; padding-bottom:1px;
+    }
+    /* A single tab button: plain text with an invisible underline that
+       only shows (in purple) on the active tab */
+    .tab-btn {
+      padding:16px 22px; border:none; background:none;
+      font-size:.92rem; font-weight:600; color:#666;
+      cursor:pointer; white-space:nowrap;
+      border-bottom:2px solid transparent; transition:color .2s,border-color .2s;
+    }
+    .tab-btn:hover { color:var(--purple); }
+    .tab-btn.active { color:var(--purple); border-bottom-color:var(--purple); }
+
+    /* Each media section is shown as a normal block (all visible at once) */
+    .media-section { display:block; }
+
+    /* ===== VIDEO / AUDIO SECTION ===== */
+
+    /* Outer padding and background for the video and audio sections */
+    .video-gallery {
+      padding:60px 24px 80px;
+      background:var(--light-bg);
+    }
+
+    /* Section headings: centered column up to 1180px wide */
+    .section-header {
+      max-width:1180px; margin:0 auto 40px;
+    }
+    .section-header h2 { font-size:1.8rem; font-weight:800; margin:6px 0 10px; }
+    .section-header p  { font-size:1.02rem; color:#555; max-width:600px; }
+
+    /* Small uppercase purple label above each section title
+       (e.g. "VIDEO WORK") */
+    .section-label {
+      display:block; font-size:.875rem; font-weight:700; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--purple); margin-bottom:4px;
+    }
+
+    /* Wrapper that centers the featured video/audio card */
+    .video-feature {
+      max-width:1180px; margin:0 auto;
+    }
+
+    /* White rounded card holding a video (or audio) plus its description.
+       overflow:hidden keeps the media's corners rounded too. */
+    .video-card {
+      background:var(--white); border-radius:22px;
+      border:1px solid var(--soft-border); overflow:hidden;
+      transition:transform .3s,box-shadow .3s;
+    }
+    /* Card lifts up and gains a shadow on hover */
+    .video-card:hover { transform:translateY(-6px); box-shadow:var(--card-shadow); }
+
+    /* A real video inside the card: aspect-ratio 16/9 reserves a
+       widescreen-shaped box before the video loads; object-fit:cover
+       fills it without stretching */
+    .video-card video {
+      width:100%; aspect-ratio:16/9; object-fit:cover;
+      background:#000; display:block;
+    }
+
+    /* Dark 16:9 box shown where the video will eventually go */
+    .video-placeholder {
+      width:100%; aspect-ratio:16/9; background:color-mix(in srgb, var(--purple) 25%, #0c0c12);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px; color:rgba(255,255,255,.4); text-align:center;
+    }
+    /* Dark gradient panel around the audio player, with everything
+       stacked and centered using flexbox */
+    .audio-wrap {
+      padding:48px 28px;
+      background:color-mix(in srgb, var(--purple) 25%, #0c0c12);
+      display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;
+    }
+    /* Square cover-art image above the player */
+    .audio-wrap .audio-cover {
+      width:180px; height:180px; object-fit:cover; border-radius:16px;
+      box-shadow:0 12px 30px rgba(0,0,0,.35); display:block;
+    }
+    /* The <audio> control bar, capped at a comfortable width */
+    .audio-wrap audio { width:100%; max-width:560px; display:block; }
+    /* Emoji and helper text inside the video placeholder */
+    .video-placeholder span { font-size:3.5rem; }
+    .video-placeholder p { font-size:.95rem; }
+
+    /* Text area of the card: title and description */
+    .video-card-body { padding:24px 28px 28px; }
+    .video-card-body h3 { font-size:1.3rem; font-weight:700; margin-bottom:8px; }
+    .video-card-body p  { font-size:.95rem; color:#555; line-height:1.6; max-width:700px; }
+
+    /* Row of tool badges; flex-wrap lets them wrap onto extra lines */
+    .video-tools { display:flex; gap:6px; flex-wrap:wrap; margin-top:14px; }
+    /* One pill-shaped badge naming a tool (border-radius:999px = fully
+       rounded ends) */
+    .tool-badge {
+      padding:3px 10px; border-radius:999px; font-size:.875rem; font-weight:600;
+      background:var(--light-bg); border:1px solid var(--soft-border); color:#555;
+    }
+
+    /* ===== PHOTO GALLERY ===== */
+
+    /* Outer padding and background for the photography section */
+    .image-gallery {
+      padding:60px 24px 80px;
+      background:var(--light-bg);
+    }
+
+    /* Masonry layout: column-count:3 flows the photos into three vertical
+       columns (like Pinterest), so different-height photos pack neatly */
+    .photo-columns {
+      max-width:1180px; margin:0 auto;
+      column-count:3;
+      column-gap:16px;
+    }
+
+    /* One photo card. break-inside:avoid stops a card being split across
+       two columns. position:relative anchors the caption overlay. */
+    .photo-item {
+      break-inside:avoid;      margin-bottom:16px;
+      border-radius:18px;
+      overflow:hidden;
+      cursor:pointer;
+      position:relative;
+      background:color-mix(in srgb, var(--purple) 25%, #0c0c12);      transition:transform .3s ease, box-shadow .3s ease;
+    }
+    /* Photo card grows slightly and gains a shadow on hover */
+    .photo-item:hover { transform:scale(1.02); box-shadow:var(--card-shadow); }
+
+    /* The photo itself fills the card width */
+    .photo-item img {
+      width:100%; display:block; object-fit:cover;
+      transition:opacity .3s;
+    }
+    /* Caption bar pinned to the bottom of the photo, on a dark fade so
+       white text is readable. Invisible (opacity:0) until hover. */
+    .photo-caption {
+      position:absolute; left:0; right:0; bottom:0;
+      padding:12px 14px 14px;
+      background:linear-gradient(to top, rgba(0,0,0,.75), transparent);
+      color:#fff; font-size:.875rem; font-weight:500;
+      opacity:0; transition:opacity .3s;
+    }
+    .photo-item:hover .photo-caption { opacity:1; }
+
+    /* Gradient box used as a stand-in before real photos are added */
+    .photo-placeholder {
+      height:200px; background:color-mix(in srgb, var(--purple) 25%, #0c0c12);
+      display:flex; align-items:center; justify-content:center;
+      color:rgba(255,255,255,.3); font-size:.875rem; text-align:center; padding:16px;
+    }
+
+    /* ===== ANIMATION GALLERY (CSS animation demo cards) =====
+       Styles for a section of small cards that each demonstrate one CSS
+       animation technique. Not in the current HTML, but ready to use. */
+
+    /* Outer padding for the animation section */
+    .animation-gallery {
+      padding:60px 24px 80px; background:var(--light-bg);
+    }
+
+    /* Responsive card grid: auto-fill + minmax makes as many 300px+
+       columns as fit the screen — no media queries needed */
+    .animation-grid {
+      max-width:1180px; margin:0 auto;
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px;
+    }
+
+    /* White rounded card holding one animation demo */
+    .animation-card {
+      background:var(--white); border-radius:20px;
+      border:1px solid var(--soft-border); overflow:hidden;
+      transition:transform .3s, box-shadow .3s;
+    }
+    .animation-card:hover { transform:translateY(-6px); box-shadow:var(--card-shadow); }
+
+    /* Dark stage area at the top of each card where the demo plays */
+    .animation-preview {
+      height:200px; background:#050509;
+      display:flex; align-items:center; justify-content:center;
+      position:relative; overflow:hidden;
+    }
+
+    /* Demo 1: a gradient circle that "breathes" — grows and fades on a loop */
+    .demo-pulse {
+      width:60px; height:60px; border-radius:50%;
+      background:var(--purple);
+      animation:pulse 2s ease-in-out infinite;
+    }
+    /* Scale up to 1.3x and dip opacity at the halfway point, then return */
+    @keyframes pulse {
+      0%, 100% { transform:scale(1); opacity:1; }
+      50%       { transform:scale(1.3); opacity:.7; }
+    }
+
+    /* Demo 2: a ring with one colored side that rotates */
+    .demo-spin {
+      width:70px; height:70px; border-radius:50%;
+      border:6px solid var(--soft-border); border-top-color:var(--purple); box-sizing:border-box;
+      animation:spin 2s linear infinite;
+    }
+    /* One full 360-degree rotation per cycle */
+    @keyframes spin {
+      to { transform:rotate(360deg); }
+    }
+
+    /* Demo 3: a rounded rectangle that floats gently up and down */
+    .demo-float {
+      width:80px; height:56px; border-radius:12px;
+      background:var(--purple);
+      animation:float 3s ease-in-out infinite;
+      box-shadow:0 10px 30px color-mix(in srgb, var(--purple) 50%, transparent);
+    }
+    /* Rise 18px at the midpoint, then settle back down */
+    @keyframes float {
+      0%, 100% { transform:translateY(0); }
+      50%       { transform:translateY(-18px); }
+    }
+
+    /* Demo 4: text with a blinking "typing cursor" (the right border) */
+    .demo-type {
+      font-size:1.4rem; font-weight:700; color:#fff;
+      border-right:3px solid var(--purple);
+      animation:blink .8s step-start infinite;
+      padding-right:4px;
+    }
+    /* Flip the cursor's border color on and off to make it blink */
+    @keyframes blink {
+      0%,100% { border-color:var(--purple); }
+      50%      { border-color:transparent; }
+    }
+
+    /* Text under each animation demo */
+    .animation-card-body { padding:18px 20px 22px; }
+    .animation-card-body h3 { font-size:1rem; font-weight:700; margin-bottom:6px; }
+    .animation-card-body p  { font-size:.875rem; color:#555; line-height:1.5; }
+    /* Small monospace box showing the CSS code behind the demo */
+    .css-snippet {
+      margin-top:10px; padding:8px 12px; border-radius:8px;
+      background:var(--light-bg); font-family:monospace; font-size:.875rem; color:#804070;
+    }
+
+    /* ===== TOOLS SECTION ===== */
+
+    /* White band containing the "My multimedia toolkit" grid */
+    .tools-section {
+      background:var(--white);
+      border-top:1px solid var(--soft-border);
+      padding:80px 24px;
+    }
+    .tools-inner { max-width:1180px; margin:0 auto; }
+    .tools-inner h2 { font-size:2rem; font-weight:800; margin:6px 0 36px; }
+
+    /* Responsive grid of tool cards — fits as many 180px+ columns as
+       the screen allows */
+    .tools-grid {
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:18px;
+    }
+    /* One tool card: light rounded tile with icon and name centered */
+    .tool-card {
+      background:var(--light-bg); border-radius:18px; padding:24px 18px;
+      border:1px solid var(--soft-border); text-align:center;
+      transition:transform .3s,box-shadow .3s;
+    }
+    /* Card lifts slightly on hover */
+    .tool-card:hover { transform:translateY(-5px); box-shadow:var(--card-shadow); }
+    .tool-icon { font-size:2.2rem; margin-bottom:10px; }
+    .tool-name { font-weight:700; font-size:.95rem; }
+
+    /* ===== CALL-TO-ACTION BAND & FOOTER ===== */
+
+    /* White strip near the bottom inviting visitors to get in touch */
+    .cta-band { background:var(--white); border-top:1px solid var(--soft-border); padding:80px 24px; }
+    /* Text on the left, button on the right; flex-wrap lets them stack
+       on narrow screens */
+    .cta-inner {
+      max-width:1180px; margin:0 auto;
+      display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap;
+    }
+    .cta-text h2 { font-size:2rem; font-weight:800; margin-bottom:10px; }
+    .cta-text p  { color:#555; max-width:480px; }
+    /* Purple pill-shaped "Get in Touch" button */
+    .btn-primary {
+      display:inline-block; padding:14px 30px; border-radius:999px;
+      background:var(--purple); color:#fff; text-decoration:none;
+      font-weight:600; font-size:1rem; transition:background .25s,transform .25s;
+    }
+    /* Button darkens and lifts 3px on hover */
+    .btn-primary:hover { background:var(--accent-dark); transform:translateY(-3px); }
+    /* Black footer bar with small gray copyright text */
+    footer { background:#000; color:#9ca3af; text-align:center; padding:20px; font-size:.875rem; }
+
+    /* ===== LIGHTBOX (full-screen photo viewer) ===== */
+
+    /* Full-screen dark overlay. display:none hides it until JavaScript
+       adds .open. position:fixed + inset:0 pins it over the whole
+       viewport; z-index:2000 puts it above everything, including the
+       header (1000). */
+    .lightbox {
+      display:none;      position:fixed; inset:0;      background:rgba(0,0,0,.92);
+      z-index:2000;
+      align-items:center; justify-content:center;
+      padding:24px;
+    }
+    /* When open, becomes a flex container that centers the photo */
+    .lightbox.open { display:flex; }
+    /* The enlarged photo: capped at 90% of the viewport, and
+       object-fit:contain shows the whole image without cropping */
+    .lightbox img {
+      max-width:90vw; max-height:90vh;
+      border-radius:16px; object-fit:contain;
+    }
+    /* White X button in the top-right corner */
+    .lightbox-close {
+      position:absolute; top:20px; right:24px;
+      color:#fff; font-size:2rem; cursor:pointer;
+      background:none; border:none; line-height:1;
+      transition:opacity .2s;
+    }
+    .lightbox-close:hover { opacity:.6; }
+    /* Round previous/next buttons. top:50% + translateY(-50%) is the
+       classic trick for vertically centering an absolutely-positioned
+       element. */
+    .lightbox-arrow {
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:56px; height:56px; border-radius:50%;
+      background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+      color:#fff; font-size:1.7rem; cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background .2s;
+      z-index:1;
+    }
+    .lightbox-arrow:hover { background:rgba(255,255,255,.3); }
+    /* Place the arrows on opposite sides of the screen */
+    .lightbox-arrow.prev { left:24px; }
+    .lightbox-arrow.next { right:24px; }
+    /* On phones: smaller arrows moved closer to the screen edges */
+    @media (max-width:600px) {
+      .lightbox-arrow { width:44px; height:44px; font-size:1.3rem; }
+      .lightbox-arrow.prev { left:10px; }
+      .lightbox-arrow.next { right:10px; }
+    }
+    /* Caption pill centered at the bottom of the lightbox.
+       left:50% + translateX(-50%) centers it horizontally. */
+    .lightbox-caption {
+      position:absolute; bottom:24px; left:50%;
+      transform:translateX(-50%);
+      color:rgba(255,255,255,.7); font-size:.9rem;
+      background:rgba(0,0,0,.5); padding:6px 16px; border-radius:999px;
+      white-space:nowrap;
+    }
+
+    /* ===== SCROLL-REVEAL ANIMATION ===== */
+
+    /* Elements start invisible and shifted 40px down; when JavaScript
+       adds .visible (as they scroll into view) they fade and slide up */
+    .fade-up { opacity:0; transform:translateY(40px); transition:opacity .8s ease,transform .8s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    /* Stagger: 2nd and 3rd fade-up siblings start slightly later for a
+       cascading effect */
+    .fade-up:nth-child(2) { transition-delay:.1s; }
+    .fade-up:nth-child(3) { transition-delay:.2s; }
+
+    /* ===== RESPONSIVE BREAKPOINTS ===== */
+
+    /* Tablets and smaller (900px or less): swap the desktop nav for the
+       hamburger button, drop the photo gallery to 2 columns, and stack
+       the CTA text/button vertically */
+    @media(max-width:900px){
+      .desktop-nav { display:none; }
+      .mobile-toggle { display:flex; }
+      .photo-columns { column-count:2; }
+      .cta-inner { flex-direction:column; text-align:center; }
+    }
+    /* Phones (600px or less): single photo column and a tighter hero */
+    @media(max-width:600px){
+      .photo-columns { column-count:1; }
+      .page-hero { padding:100px 16px 60px; }
+    }
+
+    /* ===== EXTRA POLISH: micro-animations & hover effects ===== */
+
+    /* Gentle 5px up-and-down bob (used on the hero eyebrow below) */
+    @keyframes mm-float {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-5px); }
+    }
+    /* Soft purple ring that expands outward and fades, like a radar ping
+       (used on the section-label dot below) */
+    @keyframes mm-pulse-glow {
+      0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--purple) 50%, transparent); }
+      50%     { box-shadow: 0 0 0 8px color-mix(in srgb, var(--purple) 0%, transparent); }
+    }
+
+    /* Animated underline for desktop nav links: an ::after bar starts at
+       0 width in the center, then grows to full width on hover.
+       (Purple, not blue, for the active page's link.) */
+    .desktop-nav a { position: relative; }
+    .desktop-nav a::after {
+      content: ""; position: absolute; left: 50%; bottom: -4px;
+      width: 0; height: 2px; background: var(--blue);
+      transition: width .3s ease, left .3s ease;
+    }
+    .desktop-nav a:hover::after,
+    .desktop-nav a.active::after { width: 100%; left: 0; }
+    .desktop-nav a.active::after { background: var(--purple); }
+
+    /* The colored half of the logo shifts purple -> blue on hover */
+    .brand span { transition: color .3s ease; }
+    .brand:hover span { color: var(--blue); }
+
+    /* Adds a small pulsing dot to the left of every section label
+       (padding-left makes room for it; the ::before circle is centered
+       vertically with translateY(-50%)).
+       Note: var(--accent) is not defined in :root, so the dot falls back
+       to being invisible unless --accent is added to the palette. */
+    .section-label { position: relative; padding-left: 16px; }
+    .section-label::before {
+      content: ""; position: absolute; left: 0; top: 50%;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); transform: translateY(-50%);
+      animation: mm-pulse-glow 2.2s ease-out infinite;
+    }
+
+    /* The hero's "Creative Work" pill gently floats up and down forever */
+    .page-hero-eyebrow { animation: mm-float 4s ease-in-out infinite; }
+
+    /* Tab buttons get smoother transitions and a tiny lift on hover */
+    .tab-btn {
+      transition: background .25s ease, color .25s ease,
+                  transform .2s ease;
+    }
+    .tab-btn:hover { transform: translateY(-2px); }
+
+    /* Upgraded video-card hover: a springy easing curve
+       (cubic-bezier) instead of the plain one defined earlier */
+    .video-card {
+      transition: transform .35s cubic-bezier(.2,.8,.2,1),
+                  box-shadow .35s ease;
+    }
+    .video-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+    }
+    /* Icon inside the video placeholder enlarges when the card is hovered */
+    .video-placeholder i,
+    .video-placeholder .play-icon {
+      transition: transform .3s ease;
+    }
+    .video-card:hover .video-placeholder i,
+    .video-card:hover .video-placeholder .play-icon {
+      transform: scale(1.15);
+    }
+
+    /* Photo hover polish: the image zooms in slightly while overflow:hidden
+       keeps the zoom clipped inside the rounded card */
+    .photo-item {
+      overflow: hidden;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    .photo-item img {
+      transition: transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .photo-item:hover img { transform: scale(1.06); }
+    .photo-item:hover {
+      box-shadow: 0 14px 32px rgba(0,0,0,0.12);
+    }
+    /* Smooths the caption's fade-in defined earlier */
+    .photo-caption {
+      transition: transform .3s ease, opacity .3s ease;
+    }
+
+    /* Animation and tool cards: hover lift plus a purple-tinted border */
+    .animation-card, .tool-card {
+      transition: transform .3s ease, box-shadow .3s ease,
+                  border-color .3s ease;
+    }
+    .animation-card:hover, .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 14px 32px rgba(0,0,0,0.08);
+      border-color: color-mix(in srgb, var(--purple) 30%, transparent);
+    }
+
+    /* Hamburger bars squeeze narrower when the button is hovered
+       (targets a .bar class — the current HTML uses <span> instead) */
+    .mobile-toggle .bar { transition: transform .3s ease; }
+    .mobile-toggle:hover .bar { transform: scaleX(.7); }
+    /* Mobile menu links start invisible and shifted right... */
+    .mobile-nav a {
+      opacity: 0; transform: translateX(20px);
+      transition: color .2s, padding-left .2s,
+                  opacity .4s ease, transform .4s ease;
+    }
+    /* ...then slide in one after another when the menu opens, each with a
+       slightly longer delay for a staggered entrance */
+    .mobile-nav.open a { opacity: 1; transform: translateX(0); }
+    .mobile-nav.open a:nth-of-type(1) { transition-delay: .10s; }
+    .mobile-nav.open a:nth-of-type(2) { transition-delay: .16s; }
+    .mobile-nav.open a:nth-of-type(3) { transition-delay: .22s; }
+    .mobile-nav.open a:nth-of-type(4) { transition-delay: .28s; }
+    .mobile-nav.open a:nth-of-type(5) { transition-delay: .34s; }
+
+    /* ===== ACCESSIBILITY: REDUCED MOTION ===== */
+
+    /* If the user's device is set to "reduce motion", effectively turn
+       off all animations and transitions (they finish instantly) */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+
+    /* Pushes content below the fixed 64px header */
+    .page-main { padding-top:64px; }
+
+
+body {
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+h1, h2, h3, .brand {
+  font-family: "Playfair Display", Georgia, serif;
+}

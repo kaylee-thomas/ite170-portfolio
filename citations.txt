@@ -1,0 +1,197 @@
+=== CITATIONS ===
+Keep this file in your capstone folder. Add to it as you go.
+If you borrowed it, cite it. If AI made it, cite it. Not sure? Cite it.
+
+AI-ASSISTED CODE
+----------------
+Tool: ChatGPT (OpenAI)
+  Prompt: Help me customize my ITE 170 multimedia portfolio
+  using Dr. G's existing HTML and CSS template.
+  Used in: index.html and css/index.css
+  Changes: I personalized my website with my name,
+  multimedia projects, images, headings, and descriptions.
+  ChatGPT helped me understand and modify the existing
+  HTML and CSS, add image descriptions and AI credits,
+  adjust image display settings, and apply my chosen
+  colors and Google Fonts. I made and saved the changes
+  in Visual Studio Code and tested them in my browser.
+
+AI-GENERATED MEDIA
+------------------
+File: images/hero-1.jpg
+Tool: ChatGPT (OpenAI)
+Prompt: Created T-Rex museum artwork for my
+Midnight at the Museum multimedia project.
+
+File: images/hero-2.jpg
+Tool: ChatGPT (OpenAI)
+Prompt: Create an image for my Suno song Choosing Us.
+
+File: images/hero-3.jpg
+Tool: ChatGPT (OpenAI)
+Prompt: Created an enchanted forest image for
+my multimedia portfolio.
+
+File: images/about-hero.jpg
+Page: About (about.html)
+Tool: ChatGPT (OpenAI)
+Prompt: Create a Washington Wizards-inspired basketball
+arena image using dusty rose and slate blue tones
+to complement my multimedia portfolio.
+
+MEDIA SOURCES
+-------------
+What it is: Personal portrait
+  File: images/about-me.jpg
+  Source: My personal photograph
+  License: Personal use
+
+What it is: About Me Card Image
+  File: images/about-card.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: HR and technology workspace created for my Home page.
+
+What it is: Multimedia Page Hero Image
+  File: images/multimedia-hero.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: Dark multimedia workspace featuring a camera,
+  headphones, and video editing equipment with midnight-blue
+  and champagne-gold lighting.
+
+What it is: Contact Page Hero Image
+  File: images/contact-hero.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: Dark workspace featuring a notebook, candle,
+  flowers, and laptop with midnight-blue and champagne-gold
+  lighting, created for my Contact page.
+
+What it is: Projects Page Hero Image
+  File: images/projects-hero.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: Dark creative workspace with midnight-blue tones and
+  champagne-gold lighting, created for my Projects page header.
+
+What it is: Projects Card Image
+  File: images/projects-card.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: Creative design workspace created for my Home page.
+
+What it is: Multimedia Card Image
+  File: images/multimedia-card.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: Multimedia production workspace created for my Home page.
+
+What it is: Creative Process Image
+  File: images/creative-process.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: Camera, microphone, headphones, and sketchbook representing my creative process.
+
+What it is: Design Process Image
+  File: images/design-process.png
+  Tool: ChatGPT (OpenAI)
+  Source: AI-generated artwork for my ITE 170 portfolio
+  Notes: Typography sketches, color swatches, and design planning materials.
+
+What it is: Multimedia Showcase Video
+    File: media/multimedia-showcase.mp4
+    Source: My original ITE 170 Module 6 video project
+    Editing tool: Canva
+    Notes: Multimedia presentation combining images,
+    music, video editing, and creative storytelling.
+    Any AI-generated clips and soundtrack used in the
+    video must also be documented with their original
+    tools, dates, and prompts.
+
+What it is: Cozy Fox Digital Artwork
+    File: images/cozy-fox.jpg
+    Tool: ChatGPT (OpenAI)
+    Source: AI-generated artwork for my ITE 170 portfolio
+    Notes: Digital artwork of a fox wearing a green scarf
+    inside a cozy cafe.
+
+What it is: Original AI-assisted Song
+    Title: Choosing Us
+    File: media/my-song.mp3
+    Tool: Suno AI
+    Source: Created for my ITE 170 multimedia assignment
+    Notes: Original song created using Suno AI with
+    my creative input.
+
+What it is: Protect Your Account MFA Poster
+    File: images/mfa-poster.jpg
+    Source: My original ITE 170 typography project
+    Notes: Poster encouraging multi-factor authentication
+    through bold typography and visual design.
+
+What it is: Unplug and Reset Poster
+  File: images/unplug-and-reset.png
+  Source: My original ITE 170 Module 2 poster project
+  License: Personal use
+
+What it is: Night at the Museum Poster
+  File: images/museum-poster.png
+  Source: My ITE 170 midterm project
+  Notes: Promotional poster created for my museum-themed
+  multimedia project. AI-generated imagery was used.
+
+What it is: Choosing Us Cover Artwork
+    File: images/hero-2.jpg
+    Tool: ChatGPT (OpenAI)
+    Source: AI-generated artwork for my original Suno song
+    Notes: Vinyl record, headphones, and sound waves.
+
+What it is: Multimedia Showcase Video Screenshot
+    File: images/showcase-video.png
+    Source: Screenshot from my original Module 6 video
+    Notes: Used as the video poster image.
+
+  Files:
+  images/canva-certificate-1.png
+  images/canva-certificate-2.png
+  images/canva-certificate-3.png
+
+  Source: Canva Design School
+  Titles: Canva Essentials; Meet Canva's Visual Suite;
+  Create Scroll-Stopping Content
+  Notes: Certificates earned through Canva Design School.
+
+What it is: Multimedia Showcase Video
+  File: media/multimedia-showcase.mp4
+  Title: Multimedia Showcase Video
+  Source: My original ITE 170 Module 6 video project
+  Editing tool: Canva
+  Notes: Combined multimedia assets, music, and video
+  editing into a creative showcase presentation.
+  AI tools and generated assets used in the video
+  should also be cited individually using the original
+  project's credits and prompts.
+
+What it is: Original AI-assisted song
+  Title: Choosing Us
+  Tool: Suno AI
+  Source: Created for my ITE 170 multimedia assignment
+  Notes: Created using Suno AI with my creative input.
+
+Font
+  Name: DM Sans
+  Source: Google Fonts
+  URL: https://fonts.google.com/specimen/DM+Sans
+  License: SIL Open Font License
+
+Font
+  Name: Playfair Display
+  Source: Google Fonts
+  URL: https://fonts.google.com/specimen/Playfair+Display
+  License: SIL Open Font License
+
+Icon set
+  Source:   Phosphor Icons
+  URL:      https://phosphoricons.com
+  License:  MIT

@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<!-- Tells the browser this is a modern HTML5 document -->
+<html lang="en">
+
+<!-- ===== HEAD: page metadata (info about the page, not visible content) ===== -->
+<head>
+  <!-- Character encoding so all text/symbols display correctly -->
+  <meta charset="UTF-8" />
+  <!-- Makes the page scale properly on phones and tablets (responsive design) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Text shown in the browser tab -->
+  <title>Multimedia – Kaylee Thomas</title>
+
+  <!-- Links to the external stylesheet that controls all of this page's styling -->
+  <!-- Google Fonts: DM Sans and Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/multimedia.css" />
+  <!-- Loads the Phosphor icon library (used for the small icons like the music note and camera) -->
+  <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.2"></script>
+</head>
+
+<body>
+
+  <!-- ===== HEADER / DESKTOP NAVBAR =====
+       Fixed bar at the top of every page: site name on the left,
+       navigation links on the right. "active" marks the current page. -->
+  <header>
+    <!-- Site logo/name; clicking it returns to the home page -->
+    <a class="brand" href="index.html">Kaylee<span>Thomas</span></a>
+    <!-- Navigation links shown on larger screens -->
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="multimedia.html" class="active">Multimedia</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <!-- Hamburger button, only visible on small screens; opens the mobile menu below -->
+    <button class="mobile-toggle" aria-label="Open menu" onclick="toggleMobileNav()"><span></span></button>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION =====
+       Slide-in menu for phones. Hidden off-screen until JavaScript adds
+       the "open" class. Each link also closes the menu when clicked. -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html"      onclick="toggleMobileNav()">Home</a>
+    <a href="about.html"      onclick="toggleMobileNav()">About</a>
+    <a href="projects.html"   onclick="toggleMobileNav()">Projects</a>
+    <a href="multimedia.html" class="active" onclick="toggleMobileNav()">Multimedia</a>
+    <a href="contact.html"    onclick="toggleMobileNav()">Contact</a>
+  </nav>
+
+  <!-- ===== MAIN CONTENT =====
+       Everything between the header and footer. The inline padding-top
+       pushes content down so the fixed 64px header doesn't cover it. -->
+  <main class="page-main">
+
+    <!-- ===== HERO SECTION =====
+         Large dark banner at the top of the page with a background image,
+         a small label ("eyebrow"), the page title, and a short intro. -->
+    <section class="page-hero hero-image">
+
+      <!-- Full-width background image for the hero. alt="" + aria-hidden
+           because it is decorative only (screen readers skip it). -->
+      <img
+        class="page-hero-media"
+        src="images/multimedia-hero.png"
+        alt= "Dark multimedia workspace featuring a camera, headphones, audio waveform, and video editing equipment with midnight-blue and champagne-gold lighting."
+        loading="lazy" />
+
+      <!-- Text that sits on top of the hero image -->
+      <div class="page-hero-content">
+        <span class="page-hero-eyebrow">My Creative Collection</span>
+        <h1>My Multimedia Creations</h1>
+        <p>Explore my creative journey through original music, video storytelling, and digital artwork developed throughout my ITE 170 course.</p>
+      </div>
+    </section>
+
+
+
+    <!-- ===== VIDEO SECTION =====
+         Shows the capstone video. The poster attribute is a placeholder
+         image shown until the video plays; save the exported video as
+         media/my-video.mp4 and the player picks it up automatically. -->
+    <section class="media-section active" id="tab-video">
+      <div class="video-gallery">
+
+        <!-- Section heading: small purple label, title, and description.
+             "fade-up" makes it animate in when scrolled into view. -->
+        <div class="section-header fade-up">
+          <span class="section-label">My Video Project</span>
+          <h2>Multimedia Showcase Video</h2>
+          <p>A creative showcase bringing together my ITE 170 projects through music, digital imagery, and video editing in Canva.</p>
+        </div>
+
+        <div class="video-feature">
+
+          <!-- Card that holds the video (or placeholder) plus its title,
+               description, and the tools used to make it -->
+          <div class="video-card fade-up">
+            <!-- HTML5 video player. poster = the placeholder image shown
+                 before the video plays (swap in a still from your video). -->
+            <video controls preload="metadata"
+                   poster="images/showcase-video.png"
+                   src="media/multimedia-showcase.mp4">
+              Your browser does not support the video element.
+            </video>
+            <!-- Text portion of the card -->
+            <div class="video-card-body">
+              <h3>My Multimedia Showcase Video</h3>
+              <p>
+                For my ITE 170 video project, I created a multimedia
+                showcase highlighting my creative work from the semester.
+                I wanted to tell a story about creativity, personal
+                growth, and how different forms of media can work
+                together. Using Canva, I combined images, music, and
+                video editing to create a presentation that reflects
+                the skills I developed throughout the course.
+              </p>
+              <!-- Small pill-shaped badges listing the tools used -->
+              <div class="video-tools">
+                <span class="tool-badge">Canva</span>
+                <span class="tool-badge">Video Editing</span>
+                <span class="tool-badge">AI Music</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== IMAGES SECTION =====
+         A masonry-style photo gallery (Pinterest-like columns). Clicking any
+         photo opens it full-size in the lightbox at the bottom of the page. -->
+    <section class="media-section" id="tab-photos">
+      <div class="image-gallery">
+
+        <!-- Section heading for the photo gallery -->
+        <div class="section-header fade-up">
+          <span class="section-label">My Digital Artwork</span>
+          <h2>Creative Designs &amp; Imagery</h2>
+          <p>Explore my collection of AI-generated artwork, original posters, and creative designs from ITE 170. Click any image to view it in the gallery.</p>
+        </div>
+
+        <!-- Container the JavaScript scans to build the lightbox slideshow.
+             Each photo-item = one thumbnail image + a caption that appears
+             on hover. data-full = the larger version shown in the lightbox.
+             loading="lazy" tells the browser to load images only when needed. -->
+        <div class="photo-columns" id="photoColumns">
+
+          <div class="photo-item fade-up">
+            <img src="images/museum-poster.png"
+            data-full="images/museum-poster.png"
+            alt="Midnight at the Museum promotional poster featuring a dinosaur museum theme"
+            loading="lazy" />
+          <span class="photo-caption">Midnight at the Museum – Promotional Poster</span>
+          </div>
+
+          <div class="photo-item fade-up">
+            <img src="images/hero-2.jpg"
+            data-full="images/hero-2.jpg"
+            alt="AI-generated music artwork featuring a vinyl record, headphones, and sound waves for my song Choosing Us"
+            loading="lazy" />
+          <span class="photo-caption">Choosing Us – Music Artwork</span>
+          </div>
+
+          <div class="photo-item fade-up">
+            <img src="images/hero-3.jpg"
+            data-full="images/hero-3.jpg"
+            alt="AI-generated enchanted forest scene with a magical, atmospheric setting"
+            loading="lazy" />
+          <span class="photo-caption">Enchanted Forest – Digital Artwork</span>
+          </div>
+
+          <div class="photo-item fade-up">
+            <img src="images/unplug-and-reset.png"
+            data-full="images/unplug-and-reset.png"
+            alt="Unplug and Reset wellness poster encouraging screen breaks with three tips: Look Away, Move Around, and Reset"
+            loading="lazy" />
+          <span class="photo-caption">Unplug and Reset – Wellness Poster</span>
+          </div>
+
+          <div class="photo-item fade-up">
+            <img src="images/mfa-poster.jpg"
+            data-full="images/mfa-poster.jpg"
+            alt="Protect Your Account typography poster encouraging multi-factor authentication, with bold blue and white lettering"
+            loading="lazy" />
+          <span class="photo-caption">Protect Your Account – MFA Poster</span>
+          </div>
+
+          <div class="photo-item fade-up">
+            <img src="images/cozy-fox.jpg"
+            data-full="images/cozy-fox.jpg"
+            alt="Red fox wearing a green knitted scarf in a cozy café, sitting beside a cup of coffee near a rainy window"
+            loading="lazy" />
+          <span class="photo-caption">Cozy Fox – Digital Artwork</span>
+          </div>
+
+        </div>
+      </div>
+      <!-- Visible AI credits for gallery artwork -->
+    </section>
+    
+
+    <!-- ===== AUDIO SECTION =====
+         Embeds an audio player for the Suno AI song assignment.
+         Reuses the video-card styling so it matches the rest of the page. -->
+    <section class="media-section" id="tab-audio">
+      <div class="video-gallery">
+
+        <!-- Section heading for the audio project -->
+        <div class="section-header fade-up">
+          <span class="section-label">My Music Project</span>
+          <h2>Choosing Us – My Original Song</h2>
+          <p>Discover Choosing Us, a song I created using Suno AI to explore emotional storytelling, creativity, and the connection between music and technology.</p>
+        </div>
+
+        <div class="video-feature">
+          <div class="video-card fade-up">
+            <!-- Dark gradient panel holding the cover art and the audio player -->
+            <div class="audio-wrap">
+              <img class="audio-cover"
+              src="images/hero-2.jpg"
+              alt="Choosing Us cover artwork featuring a vinyl record, headphones, and sound waves, generated using ChatGPT"
+              loading="lazy" />
+              <!-- HTML5 audio player: controls = show play/pause bar,
+                   preload="metadata" = load only the track length (not the
+                   whole file) until the user presses play. The text inside
+                   only appears in very old browsers that can't play audio. -->
+              <audio controls preload="metadata" src="media/my-song.mp3">
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+            <!-- Title, description, and tool badges for the song -->
+            <div class="video-card-body">
+              <h3>Choosing Us</h3>
+              <p>Choosing Us is an original song I created using Suno AI
+                for my ITE 170 multimedia course. I wanted to explore
+                how music can express emotions and tell a meaningful
+                story. Through this project, I learned how descriptive
+                prompts can influence a song's mood, lyrics, and overall
+                sound. Creating this song helped me understand how AI
+                can be used as a creative tool to bring musical ideas
+                to life.</p>
+                <!-- Visible AI credit for my original song -->
+                <p class="media-credit">
+                  "Choosing Us" was created using Suno (AI)
+                  for my ITE 170 multimedia course.
+                </p>
+              <div class="video-tools">
+                <span class="tool-badge">Suno AI</span>
+                <span class="tool-badge">Prompt Writing</span>
+                <span class="tool-badge">Audio Editing</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ===== SKILLS SECTION =====
+         Grid of small cards showing the multimedia skills from the capstone.
+         Each card has a Phosphor icon (<i class="ph ..."></i>) and a name. -->
+    <section class="tools-section">
+      <div class="tools-inner fade-up">
+        <span class="section-label">Multimedia Skills</span>
+        <h2>What I can do</h2>
+
+        <div class="tools-grid">
+          <div class="tool-card">
+            <div class="tool-icon"><i class="ph ph-music-notes" aria-hidden="true"></i></div>
+            <div class="tool-name">AI Music (Suno)</div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon"><i class="ph ph-film-slate" aria-hidden="true"></i></div>
+            <div class="tool-name">Video Editing</div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon"><i class="ph ph-image" aria-hidden="true"></i></div>
+            <div class="tool-name">Image Creation</div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon"><i class="ph ph-palette" aria-hidden="true"></i></div>
+            <div class="tool-name">Poster Design</div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon"><i class="ph ph-sparkle" aria-hidden="true"></i></div>
+            <div class="tool-name">Prompt Writing</div>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon"><i class="ph ph-certificate" aria-hidden="true"></i></div>
+            <div class="tool-name">Canva (3 certificates)</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CALL-TO-ACTION (CTA) BAND =====
+         Invitation strip near the bottom with a button linking to the
+         Contact page. -->
+    <section class="cta-band">
+      <div class="cta-inner fade-up">
+        <div class="cta-text">
+          <h2>Want to work together?</h2>
+          <p>Send me a message about a project, a class or a question.</p>
+        </div>
+        <a href="contact.html" class="btn-primary">Get in Touch <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER: copyright line shown at the very bottom ===== -->
+  <footer>
+    <p>© Kaylee Thomas · ITE 170 · Multimedia Capstone · NOVA Annandale</p>
+  </footer>
+
+  <!-- ===== LIGHTBOX (photo viewer overlay) =====
+       Hidden full-screen dark overlay. JavaScript opens it when a gallery
+       photo is clicked, filling in the big image and caption. It has a
+       close (X) button, previous/next arrows, and clicking the dark
+       background also closes it. -->
+  <div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+    <button class="lightbox-close" onclick="closeLightbox()" aria-label="Close slideshow">&times;</button>
+    <button class="lightbox-arrow prev" onclick="prevPhoto(event)" aria-label="Previous image"><i class="ph ph-caret-left" aria-hidden="true"></i></button>
+    <img id="lightbox-img" src="" alt="" />
+    <button class="lightbox-arrow next" onclick="nextPhoto(event)" aria-label="Next image"><i class="ph ph-caret-right" aria-hidden="true"></i></button>
+    <div class="lightbox-caption" id="lightbox-caption"></div>
+  </div>
+
+  <!-- ===== JAVASCRIPT =====
+       All the interactive behavior for this page: the mobile menu,
+       the photo lightbox/slideshow, keyboard shortcuts, and the
+       fade-in-on-scroll animations. -->
+  <script>
+
+    // --- MOBILE MENU ---
+    // Adds or removes the "open" class on the mobile menu.
+    // The CSS slides the menu in when "open" is present.
+    function toggleMobileNav() {
+      document.getElementById("mobileNav").classList.toggle("open");
+    }
+    // Closes the mobile menu if the user clicks anywhere outside of it
+    // (and outside the hamburger button).
+    document.addEventListener("click", function(e) {
+      const nav = document.getElementById("mobileNav");
+      const toggle = document.querySelector(".mobile-toggle");
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) nav.classList.remove("open");
+    });
+
+    // --- LIGHTBOX / PHOTO SLIDESHOW ---
+    // galleryItems = a real array of every .photo-item in the gallery,
+    // so we can loop through them like a slideshow.
+    var galleryItems = Array.prototype.slice.call(
+      document.querySelectorAll("#photoColumns .photo-item")
+    );
+    // currentPhoto = which photo (by index) is showing in the lightbox.
+    var currentPhoto = 0;
+
+    // Displays photo number i in the lightbox.
+    // The math with % "wraps around" so going past the last photo
+    // loops back to the first (and vice versa).
+    function showPhoto(i) {
+      currentPhoto = (i + galleryItems.length) % galleryItems.length;
+      var img = galleryItems[currentPhoto].querySelector("img");
+      var caption = galleryItems[currentPhoto].querySelector(".photo-caption").textContent;
+      var lbImg = document.getElementById("lightbox-img");
+      // Use the big data-full version if it exists, otherwise the thumbnail.
+      lbImg.src = img.dataset.full || img.src;
+      lbImg.alt = caption;
+      // Show the caption plus a counter like "3 / 6".
+      document.getElementById("lightbox-caption").textContent =
+        caption + "  ·  " + (currentPhoto + 1) + " / " + galleryItems.length;
+    }
+
+    // Give every gallery photo a click handler: clicking it loads that
+    // photo into the lightbox, shows the overlay, and stops the page
+    // behind it from scrolling.
+    galleryItems.forEach(function (item, i) {
+      item.querySelector("img").addEventListener("click", function () {
+        showPhoto(i);
+        document.getElementById("lightbox").classList.add("open");
+        document.body.style.overflow = "hidden";
+      });
+    });
+
+    // Show the previous photo. stopPropagation keeps the click from
+    // also reaching the overlay (which would close the lightbox).
+    function prevPhoto(e) {
+      if (e) e.stopPropagation();
+      showPhoto(currentPhoto - 1);
+    }
+
+    // Show the next photo (same stopPropagation trick as above).
+    function nextPhoto(e) {
+      if (e) e.stopPropagation();
+      showPhoto(currentPhoto + 1);
+    }
+
+    // Closes the lightbox — unless the click was on the photo itself,
+    // in which case we ignore it. Also restores normal page scrolling.
+    function closeLightbox(e) {
+      if (e && e.target === document.getElementById("lightbox-img")) return;
+      document.getElementById("lightbox").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    // Keyboard shortcuts: when the lightbox is open, the left and right
+    // arrow keys move through the photos.
+    document.addEventListener("keydown", function (e) {
+      if (!document.getElementById("lightbox").classList.contains("open")) return;
+      if (e.key === "ArrowLeft") prevPhoto();
+      if (e.key === "ArrowRight") nextPhoto();
+    });
+
+    // Pressing the Escape key closes the lightbox.
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") closeLightbox();
+    });
+
+    // --- FADE-IN ON SCROLL ---
+    // An IntersectionObserver watches elements and tells us when they
+    // scroll into view. When a ".fade-up" element appears, we add the
+    // "visible" class (the CSS fades/slides it in) and stop watching it.
+    // threshold 0.08 = trigger when ~8% of the element is visible;
+    // rootMargin shrinks the trigger area 40px from the bottom edge.
+    const observer = new IntersectionObserver(
+      function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+        });
+      },
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+    // Start observing every element that has the fade-up class.
+    document.querySelectorAll(".fade-up").forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>

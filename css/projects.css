@@ -1,0 +1,740 @@
+/* ==========================================================================
+   projects.css — Stylesheet for the Projects page (projects.html)
+   ITE 170 portfolio site. Styles the fixed header/nav, mobile menu,
+   hero banner, project card grid, featured-project section, CTA band,
+   footer, and all hover/scroll animations.
+   ========================================================================== */
+
+    /* ===== COLOR VARIABLES & GLOBAL RESETS ===== */
+
+    /* :root = the whole document. These custom properties (CSS variables)
+       define the site's color palette once, so it can be reused with
+       var(--name) and changed in one place. */
+    :root {
+      --purple: #142338;
+      --blue:   #344A60;
+      --accent-dark: #142338;   /* darker accent for hover states */
+      --accent: #C5A46D;   /* used by the pulsing section-label dot */
+      --ink:    #111111;
+      --light-bg: #f5f5f7;
+      --white:  #ffffff;
+      --soft-border: #e0e0e5;
+      --card-shadow: 0 18px 45px rgba(0,0,0,0.10);
+    }
+    /* Universal reset: remove default margins/padding from every element.
+       box-sizing:border-box makes width include padding and border,
+       which makes layout math predictable. */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    /* Base page styles: system font stack, light gray background,
+       near-black text. overflow-x:hidden prevents sideways scrolling
+       caused by off-screen elements (like the mobile menu). */
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--light-bg);
+      color: var(--ink);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    /* Makes anchor-link jumps glide instead of jumping instantly */
+    html { scroll-behavior: smooth; }
+    /* Images never overflow their container; display:block removes the
+       small gap browsers leave under inline images. */
+    img { max-width:100%; display:block; }
+
+    /* ===== HEADER & DESKTOP NAVIGATION ===== */
+
+    /* The top bar. position:fixed pins it to the top of the window even
+       when you scroll. backdrop-filter:blur(20px) blurs whatever scrolls
+       behind the semi-transparent background (frosted-glass effect).
+       z-index:1000 keeps it stacked above all page content. */
+    header {
+      position:fixed; top:0; left:0; width:100%; height:64px;
+      background:rgba(245,245,247,0.96); backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px); border-bottom:1px solid rgba(0,0,0,0.06);
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 32px; z-index:1000;
+    }
+    /* Site logo text on the left of the header */
+    .brand { font-weight:700; font-size:1rem; letter-spacing:.02em; text-decoration:none; color:var(--ink); }
+    /* The <span> inside the brand ("Portfolio") gets the accent purple */
+    .brand span { color:var(--purple); }
+    /* Row of desktop nav links with even spacing */
+    .desktop-nav { display:flex; gap:28px; font-size:.95rem; }
+    /* Nav links start slightly faded... */
+    .desktop-nav a { text-decoration:none; color:#333; opacity:.8; transition:opacity .2s,color .2s; }
+    /* ...and turn fully opaque + blue on hover */
+    .desktop-nav a:hover { opacity:1; color:var(--blue); }
+    /* The link for the page you're currently on is purple and bold */
+    .desktop-nav a.active { color:var(--purple); opacity:1; font-weight:600; }
+
+    /* ===== MOBILE MENU (HAMBURGER + SLIDE-IN DRAWER) ===== */
+
+    /* Round hamburger button. display:none hides it on desktop; the
+       media query at the bottom switches it to flex on small screens. */
+    .mobile-toggle {
+      display:none; width:36px; height:36px; border-radius:50%;
+      border:1px solid rgba(0,0,0,.15); background:#fff; cursor:pointer;
+      align-items:center; justify-content:center; flex-direction:column; gap:4px;
+    }
+    /* The three hamburger lines: the <span> is the middle line, and its
+       ::before/::after pseudo-elements draw the top and bottom lines. */
+    .mobile-toggle span,.mobile-toggle span::before,.mobile-toggle span::after {
+      width:18px; height:2px; background:#111; border-radius:2px; display:block;
+    }
+    /* Middle line is the positioning anchor for the other two */
+    .mobile-toggle span { position:relative; }
+    /* Top line sits 5px above the middle line */
+    .mobile-toggle span::before { content:""; position:absolute; top:-5px; left:0; }
+    /* Bottom line sits 5px below the middle line */
+    .mobile-toggle span::after  { content:""; position:absolute; top:5px;  left:0; }
+    /* The slide-in menu panel. It starts parked off-screen to the right
+       (right:-100%) and is fixed to the viewport. The dark translucent
+       background is blurred (backdrop-filter) for a glassy look. */
+    .mobile-nav {
+      position:fixed; top:0; right:-100%; width:72%; max-width:320px; height:100vh;
+      background:rgba(5,5,9,.95); backdrop-filter:blur(20px);
+      display:flex; flex-direction:column; padding:96px 32px;
+      transition:right .35s ease; z-index:999;
+    }
+    /* When JavaScript adds the "open" class, the panel slides to right:0
+       (on-screen). The transition above animates the movement. */
+    .mobile-nav.open { right:0; }
+    /* Big white links stacked vertically inside the drawer */
+    .mobile-nav a { text-decoration:none; color:#fff; font-size:1.5rem; font-weight:600; margin-bottom:1.4rem; transition:color .2s; }
+    /* Hovered link or the current page turns purple */
+    .mobile-nav a:hover, .mobile-nav a.active { color:#fff; text-decoration:underline; text-underline-offset:6px; }
+
+    /* ===== PAGE HERO (TOP BANNER) ===== */
+
+    /* Dark banner at the top of the page. position:relative makes it the
+       anchor for the absolutely-positioned image/overlay layers inside;
+       overflow:hidden clips anything that sticks out. */
+    .page-hero {
+      background:#050509; padding:120px 24px 80px;
+      text-align:center; position:relative; overflow:hidden;
+    }
+
+    /* The hero background image. inset:0 is shorthand for
+       top:0; right:0; bottom:0; left:0 — it stretches the image over the
+       entire hero. object-fit:cover scales/crops the image to fill the
+       box without squishing it. z-index:0 keeps it on the bottom layer,
+       and opacity dims it so the white text stays readable. */
+    .page-hero-media {
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit:cover;
+      z-index:0;
+      opacity:1;   /* full strength: your picture is the point */
+    }
+
+    /* Optional "hero-gradient" variant (not used on this page): a
+       ::before layer painted with three soft radial color glows. The
+       oversized background (200%) plus the animation slowly drifts the
+       glows for an aurora effect. */
+    .page-hero.hero-gradient::before {
+      content:""; position:absolute; inset:0;
+      background:
+        radial-gradient(circle at 30% 60%, color-mix(in srgb, var(--purple) 55%, transparent), transparent 55%),
+        radial-gradient(circle at 70% 40%, color-mix(in srgb, var(--blue) 50%, transparent), transparent 55%),
+        radial-gradient(circle at 50% 50%, rgba(236,72,153,.20), transparent 60%);
+      background-size:200% 200%;
+      animation: pj-aurora 14s ease-in-out infinite alternate;
+      z-index:0;
+    }
+    /* Animation for the aurora above: over 14s the gradient layers move
+       from one corner to the opposite corner, then reverse (alternate). */
+    @keyframes pj-aurora {
+      0%   { background-position:   0% 0%, 100% 100%, 50% 50%; }
+      100% { background-position: 100% 100%,  0%  0%, 50% 50%; }
+    }
+
+    /* Dark gradient overlay laid on top of a hero image or video
+       (z-index:1 = above the media, below the text). It darkens the
+       picture from 55% black at the top to 75% at the bottom so the
+       hero text is easy to read. */
+    .page-hero.hero-image::after,
+    .page-hero.hero-video::after {
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(180deg,
+        rgba(5,5,9,.56) 0%,
+        rgba(5,5,9,.64) 100%);
+      z-index:1;
+    }
+
+    /* The hero text block. z-index:2 puts it on the very top layer,
+       above both the image (0) and the dark overlay (1). */
+    .page-hero-content { position:relative; z-index:2; max-width:700px; margin:0 auto; }
+    /* The small pill-shaped "My Work" label above the heading */
+    .page-hero-eyebrow {
+      display:inline-block; font-size:.875rem; font-weight:600; letter-spacing:.12em;
+      text-transform:uppercase; color:#fff; background:rgba(255,255,255,.12);
+      border:1px solid color-mix(in srgb, var(--purple) 30%, transparent); padding:5px 14px; border-radius:999px; margin-bottom:20px;
+    }
+    /* Hero heading. clamp(min, preferred, max) makes the font size
+       responsive: never smaller than 2.4rem, never bigger than 3.8rem,
+       and 5% of the viewport width in between. */
+    .page-hero h1 { font-size:clamp(2.4rem,5vw,3.8rem); font-weight:800; color:#fff; line-height:1.1; margin-bottom:16px; }
+    /* Hero subtitle: soft translucent white, kept narrow and centered */
+    .page-hero p  { font-size:1.15rem; color:#fff; max-width:500px; margin:0 auto; }
+
+    /* ===== FILTER BAR (OPTIONAL CATEGORY TABS) =====
+       Styles for a category filter strip (All / Design / HTML-CSS...).
+       Not currently in the HTML, but ready if filtering is added. */
+
+    /* The bar itself. position:sticky + top:64px makes it stick just
+       below the fixed header once you scroll past it. */
+    .filter-bar {
+      background:var(--white);
+      border-bottom:1px solid var(--soft-border);
+      padding:0 24px;
+      position:sticky;      top:64px;      z-index:100;
+    }
+    /* Centers the buttons; overflow-x:auto lets them scroll sideways on
+       narrow screens instead of wrapping. */
+    .filter-inner {
+      max-width:1180px; margin:0 auto;
+      display:flex; gap:0; overflow-x:auto; padding-bottom:1px;
+    }
+
+    /* Individual filter tab: looks like plain text with an invisible
+       underline that appears when active. */
+    .filter-btn {
+      padding:16px 22px; border:none; background:none;
+      font-size:.92rem; font-weight:600; color:#666;
+      cursor:pointer; white-space:nowrap;
+      border-bottom:2px solid transparent;      transition:color .2s, border-color .2s;
+    }
+    /* Hovered tab turns purple */
+    .filter-btn:hover { color:var(--purple); }
+    /* The selected tab gets a purple underline */
+    .filter-btn.active { color:var(--purple); border-bottom-color:var(--purple); }
+
+    /* ===== PROJECTS GRID & CARDS ===== */
+
+    /* Section wrapper around the whole card grid */
+    .projects-section {
+      padding:60px 24px 100px;
+      background:var(--light-bg);
+    }
+
+    /* Responsive card grid: auto-fit creates as many 320px-minimum
+       columns as there are cards, and each column stretches to share the
+       space (1fr). With two cards it shows two across, then stacks. */
+    .projects-grid {
+      max-width:960px; margin:0 auto;
+      display:grid; grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));
+      gap:28px;
+    }
+
+    /* Base card: white rounded box. overflow:hidden clips the image to
+       the rounded corners. The transition animates the hover lift. */
+    .project-card {
+      background:var(--white); border-radius:24px;
+      border:1px solid var(--soft-border); overflow:hidden;
+      transition:transform .3s ease, box-shadow .3s ease;
+      text-decoration:none; color:inherit; display:block;
+    }
+    /* On hover the card floats up 8px and casts a soft shadow */
+    .project-card:hover {
+      transform:translateY(-8px);
+      box-shadow:var(--card-shadow);
+    }
+
+    /* The image area at the top of a card. position:relative anchors
+       badges placed inside it; overflow:hidden clips the zoom effect. */
+    .card-thumb {
+      height:220px; position:relative; overflow:hidden;
+      background:color-mix(in srgb, var(--purple) 25%, #0c0c12);    }
+
+    /* Variant: a gradient background instead of a photo. var() with a
+       fallback lets each card override --thumb-grad for its own colors. */
+    .card-thumb.thumb-gradient {
+      background: var(--thumb-grad, color-mix(in srgb, var(--purple) 25%, #0c0c12));
+    }
+
+    /* The thumbnail image fills its box; object-fit:cover crops instead
+       of stretching. The transition sets up the hover zoom below. */
+    .card-thumb .thumb-media {
+      width:100%; height:100%; object-fit:contain; /* contain = never cut off words on a poster */ display:block;
+      transition: transform .4s ease;
+    }
+    /* Hovering the card gently zooms the image to 105% */
+    .project-card:hover .card-thumb .thumb-media { transform: scale(1.05); }
+
+    /* Video thumbnails get a black background behind the video */
+    .card-thumb.thumb-video .thumb-media { background:#000; }
+
+    /* Same fill + zoom behavior for plain <img> children of the thumb
+       (covers cards that don't use the .thumb-media class) */
+    .card-thumb > img { width:100%; height:100%; object-fit:contain; transition:transform .4s ease; }
+    .project-card:hover .card-thumb > img { transform:scale(1.05); }
+
+    /* Small category pill pinned to the top-left corner of a thumbnail.
+       backdrop-filter:blur(8px) blurs the image behind the pill. */
+    .card-tag {
+      position:absolute; top:14px; left:14px;
+      padding:5px 13px; border-radius:999px;
+      background:rgba(0,0,0,.65); color:#fff;
+      font-size:.875rem; font-weight:600; letter-spacing:.04em;
+      backdrop-filter:blur(8px);
+    }
+
+    /* Status pill pinned to the top-right corner of a thumbnail */
+    .card-status {
+      position:absolute; top:14px; right:14px;
+      padding:5px 13px; border-radius:999px;
+      font-size:.875rem; font-weight:700; letter-spacing:.04em;
+    }
+    /* Status colors: green = done, yellow = in progress, gray = planned */
+    .card-status.done     { background:rgba(22,163,74,.8);  color:#fff; }    .card-status.progress { background:rgba(234,179,8,.85); color:#000; }    .card-status.planned  { background:rgba(0,0,0,.5);      color:#fff; }
+    /* Text area of a card (title, description, tags) */
+    .card-body { padding:24px 24px 28px; }
+    /* Card title */
+    .card-body h3 { font-size:1.15rem; font-weight:700; margin-bottom:8px; }
+    /* Card description text */
+    .card-body p  { font-size:.92rem; color:#555; line-height:1.55; margin-bottom:16px; }
+
+    /* Row of skill/tool pills; flex-wrap lets them wrap to new lines */
+    .card-tags { display:flex; flex-wrap:wrap; gap:6px; }
+    /* One small pill, e.g. "HTML5" or "Typography" */
+    .tech-tag {
+      padding:4px 11px; border-radius:999px;
+      background:var(--light-bg); border:1px solid var(--soft-border);
+      font-size:.875rem; font-weight:600; color:#555;
+    }
+
+    /* Optional "View project →" link at the bottom of a card. The gap
+       transition makes the arrow slide away from the text on hover. */
+    .card-link {
+      display:inline-flex; align-items:center; gap:6px; margin-top:16px;
+      font-size:.9rem; font-weight:600; color:var(--purple); text-decoration:none;
+      transition:color .2s, gap .2s;
+    }
+    .card-link:hover { color:var(--purple); gap:10px; }
+
+    /* Stop grid items from stretching to equal heights — each card is
+       only as tall as its own content. */
+    .projects-grid { align-items:start; }
+
+    /* ===== POSTER-STYLE CARDS (IMAGE FILLS WHOLE CARD) ===== */
+
+    /* Poster layout: the card becomes a tall flex column so the text
+       can be pushed to the bottom over the image. */
+    .project-card.card-poster {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  background: #ffffff;
+}
+
+.card-poster .card-thumb {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  height: auto;
+}
+
+.card-poster .card-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.card-poster .card-body {
+  position: relative;
+  margin-top: 0;
+  width: 100%;
+  padding: 20px;
+  background: #ffffff;
+}
+
+.card-poster .card-body h3 {
+  color: var(--purple);
+}
+
+.card-poster .card-body p {
+  color: var(--ink);
+}
+
+.card-poster .tech-tag {
+  background: #f5f5f7;
+  border-color: #e0e0e5;
+  color: var(--purple);
+}
+
+.card-poster .card-link {
+  color: var(--purple);
+}
+
+.card-poster .card-link:hover {
+  color: var(--blue);
+}
+
+
+    /* ===== FEATURED PROJECT SECTION ===== */
+
+    /* White section wrapper for the spotlighted project */
+    .featured-project {
+      background:var(--white);
+      border-top:1px solid var(--soft-border);
+      padding:80px 24px;
+    }
+    /* Two-column grid: image column (1.2fr) is slightly wider than the
+       text column (1fr). Collapses to one column on mobile (see media
+       query below). */
+    .featured-inner {
+      max-width:1180px; margin:0 auto;
+      display:grid; grid-template-columns:1.2fr 1fr; gap:64px; align-items:center;
+    }
+
+    /* Rounded, shadowed frame around the featured image */
+    .featured-visual {
+      border-radius:28px; overflow:hidden;
+      box-shadow:var(--card-shadow);
+    }
+    /* The featured image fills its frame; the gradient shows while the
+       image loads (or if it fails). */
+    .featured-visual img {
+      width:100%; display:block; height:auto; object-fit:contain; /* whole image, no cropping */
+      background:color-mix(in srgb, var(--purple) 25%, #0c0c12);
+    }
+    /* Fallback box shown if there is no image yet — dark gradient with
+       centered placeholder text/icon. */
+    .featured-placeholder {
+      width:100%; min-height:360px;
+      background:color-mix(in srgb, var(--purple) 25%, #0c0c12);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:12px; color:rgba(255,255,255,.3); text-align:center; padding:24px;
+    }
+    .featured-placeholder span { font-size:3rem; }
+
+    /* Right column: stacks badge, heading, paragraph, list, and button
+       with even vertical spacing. */
+    .featured-text { display:flex; flex-direction:column; gap:16px; }
+    /* "Featured Project" pill with a purple-to-blue gradient.
+       width:fit-content keeps the pill only as wide as its text. */
+    .featured-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:var(--purple);
+      color:#fff; padding:6px 16px; border-radius:999px;
+      font-size:.875rem; font-weight:700; letter-spacing:.06em; text-transform:uppercase;
+      width:fit-content;
+    }
+    /* Featured project title and description */
+    .featured-text h2 { font-size:2.2rem; font-weight:800; line-height:1.15; }
+    .featured-text p  { font-size:1.05rem; color:#444; line-height:1.7; }
+
+    /* Outcomes list: bullets removed and items stacked with spacing */
+    .outcomes { list-style:none; display:flex; flex-direction:column; gap:10px; margin-top:4px; }
+    .outcomes li {
+      display:flex; align-items:flex-start; gap:10px;
+      font-size:.95rem; color:#333;
+    }
+    /* Adds a purple checkmark in front of each list item using a
+       ::before pseudo-element instead of a normal bullet. */
+    .outcomes li::before {
+      content:"✓";
+      color:var(--purple); font-weight:700; flex-shrink:0; margin-top:1px;
+    }
+
+    /* ===== CANVA CERTIFICATIONS SECTION ===== */
+
+    /* White band holding the three certificate cards */
+    .cert-section {
+      background:var(--white);
+      border-top:1px solid var(--soft-border);
+      padding:80px 24px;
+    }
+    .cert-inner { max-width:1180px; margin:0 auto; }
+
+    /* Heading block above the cards */
+    .cert-header { margin-bottom:40px; }
+    /* Small uppercase purple label ("CERTIFICATIONS") */
+    .cert-header .section-label {
+      display:inline-block; font-size:.875rem; font-weight:700;
+      letter-spacing:.12em; text-transform:uppercase; color:var(--purple);
+    }
+    .cert-header h2 { font-size:2.2rem; font-weight:800; line-height:1.15; margin:6px 0 10px; }
+    .cert-header p  { font-size:1.05rem; color:#555; max-width:560px; }
+
+    /* Three equal columns on desktop; auto-fit + minmax drops to two,
+       then one column as the screen narrows — no media query needed */
+    .cert-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));
+      gap:28px;
+    }
+
+    /* One certificate card: rounded white box with a light border */
+    .cert-card {
+      background:var(--white); border-radius:22px;
+      border:1px solid var(--soft-border); overflow:hidden;
+      display:flex; flex-direction:column;
+      transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease, border-color .35s ease;
+    }
+    .cert-card:hover {
+      transform:translateY(-6px);
+      border-color:color-mix(in srgb, var(--purple) 35%, transparent);
+      box-shadow:0 18px 40px rgba(0,0,0,0.10), 0 0 0 3px color-mix(in srgb, var(--purple) 8%, transparent);
+    }
+
+    /* Certificate image area. aspect-ratio 1.414/1 matches a landscape
+       A4/letter certificate. A solid color frame
+       surrounds the image; object-fit:contain shows the WHOLE certificate. */
+    .cert-image {
+      display:block; aspect-ratio:1.414 / 1;
+      background:var(--purple);
+      padding:14px; overflow:hidden;
+    }
+    .cert-image img {
+      width:100%; height:100%; object-fit:contain;
+      border-radius:10px; background:#fff;
+      transition:transform .45s ease;
+    }
+    .cert-card:hover .cert-image img { transform:scale(1.03); }
+
+    /* Text area under the image */
+    .cert-body { padding:22px 24px 26px; display:flex; flex-direction:column; gap:6px; flex:1; }
+    /* Issuer line with a certificate icon */
+    .cert-issuer {
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.875rem; font-weight:700; letter-spacing:.06em;
+      text-transform:uppercase; color:var(--purple);
+    }
+    .cert-issuer i { font-size:1.05rem; }
+    .cert-body h3 { font-size:1.15rem; font-weight:700; line-height:1.3; }
+    .cert-date { font-size:.88rem; color:#666; }
+    /* "View certificate" link — margin-top:auto pins it to the bottom so
+       links line up across cards even when titles wrap differently */
+    .cert-link {
+      margin-top:auto; padding-top:10px;
+      display:inline-flex; align-items:center; gap:6px;
+      font-size:.9rem; font-weight:600; color:var(--purple); text-decoration:none;
+      transition:color .2s, gap .2s;
+    }
+    .cert-link:hover { text-decoration:underline; gap:10px; }
+
+    /* ===== BUTTONS ===== */
+
+    /* Main pill-shaped purple button used for calls to action */
+    .btn-primary {
+      display:inline-block; padding:14px 30px; border-radius:999px;
+      background:var(--purple); color:#fff; text-decoration:none;
+      font-weight:600; font-size:.95rem; transition:background .25s,transform .25s;
+      width:fit-content;
+    }
+    /* Darker purple + a small upward lift on hover */
+    .btn-primary:hover { background:var(--accent-dark); transform:translateY(-3px); }
+    /* Secondary outlined button (lower-emphasis alternative) */
+    .btn-secondary {
+      display:inline-block; padding:13px 30px; border-radius:999px;
+      border:1.5px solid var(--soft-border); color:#444; text-decoration:none;
+      font-weight:500; font-size:.95rem; transition:border-color .25s,color .25s,transform .25s;
+    }
+    .btn-secondary:hover { border-color:#aaa; color:#111; transform:translateY(-3px); }
+
+    /* ===== CTA BAND & FOOTER ===== */
+
+    /* Call-to-action strip near the bottom of the page */
+    .cta-band { background:var(--white); border-top:1px solid var(--soft-border); padding:80px 24px; }
+    /* Text on the left, button on the right; flex-wrap lets them stack
+       when the screen is too narrow. */
+    .cta-inner {
+      max-width:1180px; margin:0 auto;
+      display:flex; justify-content:space-between; align-items:center; gap:32px; flex-wrap:wrap;
+    }
+    .cta-text h2 { font-size:2rem; font-weight:800; margin-bottom:10px; }
+    .cta-text p  { color:#555; max-width:480px; }
+    /* Simple black footer bar with small gray text */
+    footer { background:#000; color:#9ca3af; text-align:center; padding:20px; font-size:.875rem; }
+
+    /* ===== SCROLL-IN (FADE-UP) ANIMATION ===== */
+
+    /* Starting state: invisible and shifted 40px down. The JavaScript
+       IntersectionObserver adds "visible" when the element scrolls
+       into view. */
+    .fade-up { opacity:0; transform:translateY(40px); transition:opacity .8s ease,transform .8s ease; }
+    /* Ending state: fully visible in its normal position */
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+    /* Sibling elements animate slightly after each other (staggered) */
+    .fade-up:nth-child(2) { transition-delay:.1s; }
+    .fade-up:nth-child(3) { transition-delay:.2s; }
+    .fade-up:nth-child(4) { transition-delay:.3s; }
+
+    /* Used by category filtering (if added): hides filtered-out cards */
+    .project-card.hidden { display:none; }
+
+    /* ===== RESPONSIVE LAYOUT (SCREENS 900px AND NARROWER) ===== */
+
+    /* On tablets/phones: hide the desktop nav, show the hamburger
+       button, and stack the featured-project and CTA sections into a
+       single centered column. */
+    @media(max-width:900px){
+      .desktop-nav { display:none; }
+      .mobile-toggle { display:flex; }
+      .featured-inner { grid-template-columns:1fr; }
+      .cta-inner { flex-direction:column; text-align:center; }
+    }
+
+    /* ===== EXTRA POLISH: MICRO-ANIMATIONS & HOVER EFFECTS ===== */
+
+    /* Gentle bobbing motion: element floats up 5px and back down */
+    @keyframes pj-float {
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-5px); }
+    }
+    /* Pulsing glow: a purple ring expands outward and fades away,
+       like a ripple, then repeats. */
+    @keyframes pj-pulse-glow {
+      0%,100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--purple) 50%, transparent); }
+      50%     { box-shadow: 0 0 0 8px color-mix(in srgb, var(--purple) 0%, transparent); }
+    }
+
+    /* Animated underline for desktop nav links: an invisible 0-width
+       bar under each link... */
+    .desktop-nav a { position: relative; }
+    .desktop-nav a::after {
+      content: ""; position: absolute; left: 50%; bottom: -4px;
+      width: 0; height: 2px; background: var(--blue);
+      transition: width .3s ease, left .3s ease;
+    }
+    /* ...that grows from the center to full width on hover or when the
+       link is the active page. */
+    .desktop-nav a:hover::after,
+    .desktop-nav a.active::after { width: 100%; left: 0; }
+    /* Active page's underline is purple instead of blue */
+    .desktop-nav a.active::after { background: var(--purple); }
+
+    /* Hovering the logo shifts "Portfolio" from purple to blue */
+    .brand span { transition: color .3s ease; }
+    .brand:hover span { color: var(--blue); }
+
+    /* Optional section label with a small pulsing dot to its left
+       (the dot uses the pj-pulse-glow ripple animation). transform:
+       translateY(-50%) vertically centers the dot on the text line. */
+    .section-label { position: relative; padding-left: 16px; }
+    .section-label::before {
+      content: ""; position: absolute; left: 0; top: 50%;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--accent); transform: translateY(-50%);
+      animation: pj-pulse-glow 2.2s ease-out infinite;
+    }
+
+    /* The "My Work" hero pill slowly bobs up and down forever */
+    .page-hero-eyebrow { animation: pj-float 4s ease-in-out infinite; }
+
+    /* Filter tabs get smoother transitions plus a tiny hover lift */
+    .filter-btn {
+      transition: background .25s ease, color .25s ease,
+                  border-color .25s ease, transform .2s ease;
+    }
+    .filter-btn:hover { transform: translateY(-2px); }
+
+    /* Upgraded card hover (overrides the earlier version): a springy
+       cubic-bezier easing curve for the lift... */
+    .project-card {
+      transition: transform .35s cubic-bezier(.2,.8,.2,1),
+                  box-shadow .35s ease, border-color .35s ease;
+    }
+    /* ...plus a purple-tinted border and a subtle purple glow ring
+       (the second box-shadow) around the card. */
+    .project-card:hover {
+      transform: translateY(-6px);
+      border-color: color-mix(in srgb, var(--purple) 35%, transparent);
+      box-shadow:
+        0 18px 40px rgba(0,0,0,0.10),
+        0 0 0 3px color-mix(in srgb, var(--purple) 8%, transparent);
+    }
+    /* Keep the zooming image clipped inside the thumbnail box */
+    .card-thumb { overflow: hidden; }
+    /* Slightly slower, smoother image zoom on hover */
+    .card-thumb img { transition: transform .45s ease; }
+    .project-card:hover .card-thumb img { transform: scale(1.05); }
+
+    /* Corner category pill lifts and grows a little when the card is
+       hovered, and takes on the accent color. */
+    .card-tag { transition: transform .3s ease, background .3s ease; }
+    .project-card:hover .card-tag {
+      transform: translateY(-2px) scale(1.05);
+      background: var(--accent);
+    }
+
+    /* Smooth color changes on tech pills */
+    .tech-tag { transition: background .25s ease, color .25s ease; }
+
+    /* Featured image gets a slow, springy transition... */
+    .featured-visual {
+      transition: transform .5s cubic-bezier(.2,.8,.2,1),
+                  box-shadow .5s ease;
+    }
+    /* ...and a 3D tilt on hover: perspective() gives depth, rotateY/
+       rotateX tip the image slightly, translateY lifts it. */
+    .featured-visual:hover {
+      transform: perspective(900px) rotateY(-3deg) rotateX(2deg) translateY(-4px);
+    }
+    /* The "Featured Project" badge bobs like the hero eyebrow */
+    .featured-badge { animation: pj-float 4s ease-in-out infinite; }
+
+    /* Button "shine" effect: a diagonal white streak (::before) starts
+       hidden off the left edge of the button... */
+    .btn-primary { position: relative; overflow: hidden; }
+    .btn-primary::before {
+      content: ""; position: absolute; top: 0; left: -120%;
+      width: 60%; height: 100%;
+      background: linear-gradient(120deg,
+        transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+      transition: left .7s ease;
+    }
+    /* ...and sweeps across to the right on hover, like light glinting */
+    .btn-primary:hover::before { left: 140%; }
+
+    /* Hamburger bars shrink slightly on hover (uses a .bar class) */
+    .mobile-toggle .bar { transition: transform .3s ease; }
+    .mobile-toggle:hover .bar { transform: scaleX(.7); }
+    /* Mobile menu links start invisible and nudged 20px right... */
+    .mobile-nav a {
+      opacity: 0; transform: translateX(20px);
+      transition: color .2s, padding-left .2s,
+                  opacity .4s ease, transform .4s ease;
+    }
+    /* ...then slide in when the menu opens... */
+    .mobile-nav.open a { opacity: 1; transform: translateX(0); }
+    /* ...one after another, each delayed a bit more than the last */
+    .mobile-nav.open a:nth-of-type(1) { transition-delay: .10s; }
+    .mobile-nav.open a:nth-of-type(2) { transition-delay: .16s; }
+    .mobile-nav.open a:nth-of-type(3) { transition-delay: .22s; }
+    .mobile-nav.open a:nth-of-type(4) { transition-delay: .28s; }
+    .mobile-nav.open a:nth-of-type(5) { transition-delay: .34s; }
+
+    /* ===== ACCESSIBILITY: REDUCED MOTION ===== */
+
+    /* If the user's device is set to "reduce motion," make every
+       animation and transition effectively instant so the site doesn't
+       trigger motion sensitivity. */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+      }
+    }
+
+
+    /* Row of buttons under the capstone description */
+    .featured-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:8px; }
+
+    /* Pushes content below the fixed 64px header */
+    .page-main { padding-top:64px; }
+
+
+
+body {
+  font-family: "DM Sans", Arial, sans-serif;
+}
+
+h1, h2, h3, .brand {
+  font-family: "Playfair Display", Georgia, serif;
+}

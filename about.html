@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ===== HEAD: page setup (nothing here is visible on the page itself) ===== -->
+  <!-- charset tells the browser how to read text characters;
+       viewport makes the page scale correctly on phones and tablets -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- The text shown in the browser tab and in search results -->
+  <title>About | Kaylee Thomas</title>
+
+  <!-- Google Fonts: DM Sans and Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/about.css" />
+  <!-- Loads the Phosphor icon library so we can use <i class="ph ..."> icons -->
+  <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.2"></script>
+</head>
+
+<body>
+
+  <!-- ===== HEADER / NAVBAR: fixed bar across the top of every page ===== -->
+  <!-- Contains the site name (brand), the desktop menu links, and a
+       hamburger button that only appears on small screens -->
+  <header>
+    <!-- Site logo/name; clicking it returns to the home page -->
+    <a class="brand" href="index.html">Kaylee<span>Thomas</span></a>
+    <!-- Desktop menu (hidden on phones); "active" highlights the current page -->
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="multimedia.html">Multimedia</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <!-- Hamburger button (phones only); onclick runs the JavaScript function
+         toggleMobileNav() to open/close the slide-in menu below -->
+    <button class="mobile-toggle" aria-label="Open menu" onclick="toggleMobileNav()"><span></span></button>
+  </header>
+
+  <!-- ===== MOBILE NAV: slide-in menu panel for small screens ===== -->
+  <!-- Hidden off-screen by default; CSS slides it in when JavaScript adds
+       the "open" class. Each link also closes the menu when tapped. -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html"      onclick="toggleMobileNav()">Home</a>
+    <a href="about.html" class="active" onclick="toggleMobileNav()">About</a>
+    <a href="projects.html"   onclick="toggleMobileNav()">Projects</a>
+    <a href="multimedia.html" onclick="toggleMobileNav()">Multimedia</a>
+    <a href="contact.html"    onclick="toggleMobileNav()">Contact</a>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <!-- padding-top:64px pushes content down so the fixed header doesn't cover it -->
+  <main class="page-main">
+
+    <!-- ===== HERO SECTION: big dark banner at the top of the page ===== -->
+    <!-- Uses a full-width background image with the page title layered on top -->
+    <section class="page-hero hero-image">
+      
+      <!-- AI use: ChatGPT (OpenAI), November 17, 2026.
+           Created a Washington Wizards-inspired basketball arena
+           image for my About page using my creative direction. -->
+      <img
+      class="page-hero-media"
+      src="images/about-hero.png"
+      alt="" aria-hidden="true" />
+
+      <!-- The text that sits on top of the hero image -->
+      <div class="page-hero-content">
+        <!-- Small pill-shaped label ("eyebrow") above the main heading -->
+        <span class="page-hero-eyebrow">
+          <i class="ph-fill ph-sparkle" aria-hidden="true"></i>
+          About Me
+        </span>
+        <h1>Hi, I'm Kaylee Thomas</h1>
+        <p>IT Student at NOVA · Multimedia Creator · Human Resources Professional</p>
+
+        <!-- Row of decorative circular icons under the intro text -->
+        <div class="page-hero-icons" aria-hidden="true">
+          <i class="ph ph-music-notes" title="Music"></i>
+          <i class="ph ph-film-strip" title="Video"></i>
+          <i class="ph ph-image" title="Images"></i>
+          <i class="ph ph-palette" title="Design"></i>
+        </div>
+      </div>
+    </section>
+    <!-- Visible AI credit for About page hero artwork -->
+
+    <!-- ===== BIO SECTION: profile photo + "My Story" paragraphs ===== -->
+    <!-- Two-column layout: photo on the left, text on the right
+         (stacks into one column on small screens via CSS) -->
+    <section class="bio-section">
+      <div class="bio-inner">
+
+        <!-- Left column: profile photo inside a gradient frame.
+             "fade-up" makes it animate in when scrolled into view -->
+        <div class="bio-photo fade-up">
+          <div class="bio-photo-frame">
+            <img src="images/about-me.jpg" alt="Portrait of Kaylee Thomas wearing a black zip-up jacket against a white background" loading="lazy" />
+          </div>
+        </div>
+
+        <!-- Right column: the written bio -->
+        <div class="bio-text fade-up">
+
+          <!-- Small uppercase label above the heading -->
+          <span class="section-label">My Story</span>
+
+          <h2>Kaylee Thomas</h2>
+
+          <p>
+            Hi! I'm Kaylee, an Information Technology student at
+            Northern Virginia Community College (NOVA). Alongside
+            my studies, I work in Human Resources, where I've
+            developed a strong interest in how technology can
+            improve communication, organization, and workplace
+            processes. I'm passionate about continuing to learn,
+            building new skills, and exploring opportunities
+            that combine my interests in technology and people.
+          </p>
+          <p>
+            Throughout my ITE 170 Multimedia course, I've had
+            the opportunity to explore creativity in ways I
+            never expected. From creating my original song,
+            Choosing Us, using Suno AI to designing my Midnight
+            at the Museum poster and video teaser, each project
+            has challenged me to try something new. I've also
+            enjoyed learning how to build websites using HTML
+            and CSS, bringing together my interests in
+            technology, design, and storytelling.
+          </p>
+          <p>
+            Outside of work and school, I enjoy spending time
+            with family and friends, watching basketball, and
+            supporting the Washington Wizards. I value kindness,
+            personal growth, and staying true to myself.
+            Whether I'm exploring a new creative project or
+            learning something challenging, I enjoy finding
+            opportunities to grow and express my personality.
+          </p>
+
+          <!-- "At a glance" card: quick facts, one icon + label + value per row -->
+          <div class="glance">
+            <div class="glance-title">At a glance</div>
+            <div class="glance-row">
+              <i class="ph ph-map-pin" aria-hidden="true"></i>
+              <span class="glance-label">Location</span>
+              <span class="glance-value">Northern Virginia</span>
+            </div>
+            <div class="glance-row">
+              <i class="ph ph-graduation-cap" aria-hidden="true"></i>
+              <span class="glance-label">Program</span>
+              <span class="glance-value">Information Technology (A.S.)</span>
+            </div>
+            <div class="glance-row">
+              <i class="ph ph-star" aria-hidden="true"></i>
+              <span class="glance-label">Semester</span>
+              <span class="glance-value">Fall 2026</span>
+            </div>
+            <div class="glance-row">
+              <i class="ph ph-lightbulb" aria-hidden="true"></i>
+              <span class="glance-label">Passion</span>
+              <span class="glance-value">Technology &amp; Creativity</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== EDUCATION SECTION: vertical timeline of courses/experience ===== -->
+    <!-- Each timeline-item = one entry: a round dot (icon) plus text.
+         "active" dot = current course; "done" dots = completed steps -->
+    <section class="edu-section">
+      <div class="edu-inner">
+        <span class="section-label fade-up">Education</span>
+        <h2 class="fade-up">My learning journey</h2>
+
+        <div class="timeline">
+
+          <!-- Timeline entry 1: the current course (highlighted dot) -->
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot active"><i class="ph ph-star" aria-hidden="true"></i></div>
+            <div class="timeline-content">
+              <div class="meta">Fall 2026</div>
+              <h3>ITE 170 — Multimedia Capstone</h3>
+              <p>
+                A capstone focused on multimedia: an original Suno song, a
+                short video, original images, a poster, a midterm exam
+                project, and three Canva Design School certificates.
+              </p>
+            </div>
+          </div>
+
+          <!-- Timeline entry 2: a completed course or experience (check-mark dot) -->
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot done"><i class="ph ph-check" aria-hidden="true"></i></div>
+            <div class="timeline-content">
+              <div class="meta">Fall 2026</div>
+              <h3>Web Development with HTML &amp; CSS</h3>
+              <p>
+                Through ITE 170, I learned how to create and customize
+                web pages using HTML, CSS, and Visual Studio Code.
+                From building my first HTML page to exploring different
+                CSS styling methods, I've gained confidence in my
+                ability to design websites and bring my ideas to life.
+              </p>
+            </div>
+          </div>
+
+          <!-- Timeline entry 3: background before NOVA (check-mark dot) -->
+          <div class="timeline-item fade-up">
+            <div class="timeline-dot done"><i class="ph ph-check" aria-hidden="true"></i></div>
+            <div class="timeline-content">
+              <div class="meta">Fall 2026</div>
+              <h3>Canva Design School Certifications</h3>
+              <p>
+                During my ITE 170 course, I completed three Canva
+                Design School certifications. These experiences helped
+                me develop my understanding of graphic design,
+                typography, and visual communication while building
+                confidence in my creative abilities.
+              </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CALL-TO-ACTION BAND: invites visitors to the Projects page ===== -->
+    <section class="cta-band">
+      <div class="cta-inner fade-up">
+        <div class="cta-text">
+          <h2>Ready to see my work?</h2>
+          <p>See my poster, midterm exam, and Canva certificates.</p>
+        </div>
+        <a href="projects.html" class="btn-primary">View Projects <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER: copyright line shown at the bottom of every page ===== -->
+  <footer>
+    <p>© Kaylee Thomas · ITE 170 · Multimedia Capstone · NOVA Annandale</p>
+  </footer>
+
+  <!-- ===== JAVASCRIPT: small scripts that make the page interactive ===== -->
+  <script>
+    // Opens/closes the mobile menu.
+    // Adding or removing the "open" class lets the CSS slide the panel in or out.
+    function toggleMobileNav() {
+      document.getElementById("mobileNav").classList.toggle("open");
+    }
+
+    // Closes the mobile menu if the user clicks anywhere OUTSIDE of it.
+    // "e" is the click event; e.target is the exact element that was clicked.
+    document.addEventListener("click", function(e) {
+      const nav = document.getElementById("mobileNav");           // the slide-in menu
+      const toggle = document.querySelector(".mobile-toggle");    // the hamburger button
+      // If the click was not inside the menu and not on the button, close the menu
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) nav.classList.remove("open");
+    });
+
+    // Scroll animation: an IntersectionObserver "watches" elements and tells us
+    // when they scroll into the visible part of the screen.
+    const observer = new IntersectionObserver(
+      function(entries) {
+        entries.forEach(function(entry) {
+          // When an element becomes visible, add the "visible" class (CSS fades
+          // it in) and stop watching it so the animation only runs once.
+          if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+        });
+      },
+      // threshold 0.1 = trigger when 10% of the element is visible;
+      // rootMargin -40px = wait until it is 40px above the bottom edge
+      { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
+    );
+    // Find every element with the "fade-up" class and start watching it
+    document.querySelectorAll(".fade-up").forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>

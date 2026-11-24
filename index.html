@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<!-- ================= HEAD / PAGE METADATA =================
+     Everything in <head> is information ABOUT the page, not visible content:
+     the character set, the mobile viewport setting, the browser-tab title,
+     the link to our external stylesheet, and the Phosphor icon library. -->
+<head>
+
+  <!-- Tells the browser to use UTF-8 so special characters (like ·, →, ×) display correctly -->
+  <meta charset="UTF-8" />
+
+  <!-- Makes the page responsive: the layout matches the device's screen width instead of zooming out -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Text shown in the browser tab and used by search engines -->
+  <title>Home | Kaylee Thomas</title>
+
+  <!-- Loads all of the page's styles from the external CSS file -->
+  <!-- Google Fonts: DM Sans and Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/index.css" />
+  <!-- Loads the Phosphor icon font library from a CDN (lets us use <i> icon tags) -->
+  <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.2"></script>
+</head>
+
+<body>
+
+  <!-- Dark, semi-transparent overlay that covers the page behind the mobile menu.
+       Hidden by default; JavaScript shows it when the menu opens.
+       Clicking it closes the mobile menu. -->
+  <div class="mobile-overlay" id="mobileOverlay" onclick="closeMobileNav()"></div>
+
+  <!-- ================= HEADER / TOP NAVIGATION BAR =================
+       Fixed bar that stays pinned to the top of the screen while you scroll.
+       Contains the site logo (brand), the desktop nav links, and the
+       hamburger button that appears on small screens. -->
+  <header>
+
+    <!-- Site logo / brand name; links back to the home page.
+         The <span> lets CSS color part of the name differently. -->
+    <a class="brand" href="index.html">Kaylee<span>Thomas</span></a>
+    </a>
+
+    <!-- Main navigation links, shown only on desktop-size screens.
+         The "active" class highlights the page you are currently on. -->
+    <nav class="desktop-nav">
+      <a href="index.html" class="active">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="multimedia.html">Multimedia</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+
+    <!-- Right side of the header: holds the mobile hamburger button -->
+    <div class="header-actions">
+
+      <!-- Hamburger button: hidden on desktop, visible on small screens.
+           Clicking it runs the JavaScript function that slides the mobile menu open.
+           aria-label describes the button for screen readers. -->
+      <button
+        class="mobile-toggle"
+        aria-label="Open navigation"
+        onclick="openMobileNav()">
+        <span class="bar"></span>
+      </button>
+
+    </div>
+
+  </header>
+
+  <!-- ================= MOBILE NAVIGATION DRAWER =================
+       Slide-in menu for phones/tablets. It sits off-screen (right: -100%)
+       until JavaScript adds the "open" class, which slides it into view.
+       Every link also calls closeMobileNav() so the menu closes after you tap. -->
+  <nav class="mobile-nav" id="mobileNav" aria-label="Mobile navigation">
+
+    <!-- "X" button in the corner that closes the drawer -->
+    <button
+      class="mobile-nav-close"
+      aria-label="Close navigation"
+      onclick="closeMobileNav()">
+      &times;
+    </button>
+
+    <!-- Small uppercase heading inside the drawer -->
+    <span class="mobile-nav-label">Navigation</span>
+
+    <!-- Same page links as the desktop nav, styled for the drawer -->
+    <a href="index.html" class="active" onclick="closeMobileNav()">Home</a>
+    <a href="about.html"      onclick="closeMobileNav()">About</a>
+    <a href="projects.html"   onclick="closeMobileNav()">Projects</a>
+    <a href="multimedia.html" onclick="closeMobileNav()">Multimedia</a>
+    <a href="contact.html"    onclick="closeMobileNav()">Contact</a>
+
+    <!-- Call-to-action button pinned to the bottom of the drawer -->
+    <div class="mobile-nav-cta">
+      <a href="contact.html" onclick="closeMobileNav()">Let's Connect <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+    </div>
+
+  </nav>
+
+  <!-- ================= MAIN PAGE CONTENT =================
+       padding-top: 64px pushes the content down so it isn't hidden
+       underneath the fixed 64px-tall header. -->
+  <main class="page-main">
+
+    <!-- ================= HERO SLIDESHOW =================
+         Full-screen banner at the top of the page. Three background slides
+         are stacked on top of each other; JavaScript rotates which one has
+         the "active" class every 4 seconds, fading between them.
+         The matching text blocks and dot buttons rotate in sync. -->
+    <section class="hero">
+
+      <!-- Slide 1 background image (starts visible because it has "active") -->
+      <div class="hero-slide active">
+        <!-- AI use: ChatGPT (OpenAI), November 15, 2026.
+        Prompt: "Create an enchanted forest image with a magical
+        atmosphere for my multimedia portfolio."
+        What I did: Selected the AI-generated image,
+        removed visible lettering, and resized and exported
+        it in Canva as a 1600 x 900 JPG. -->
+         <img src="images/hero-1.jpg" class="slide-media" alt="AI-generated image of a T-Rex skeleton inside a museum illuminated by warm golden and blue lighting, created for my Midnight at the Museum project." />
+      </div>
+
+      <!-- Slide 2 background image (hidden until JavaScript makes it active) -->
+      <div class="hero-slide">
+        <!-- AI use: ChatGPT (OpenAI), November 15, 2026.
+        Prompt: "Create an image for my Suno song Choosing Us."
+        What I did: Selected the generated music artwork,
+        resized it in Canva, and exported it for my portfolio. -->
+        <img src="images/hero-2.jpg" class="slide-media" alt="AI-generated image created with ChatGPT for my Choosing Us music project, featuring headphones, a vinyl record, and a glowing audio waveform." />
+
+      </div>
+
+      <!-- Slide 3 background image -->
+      <div class="hero-slide">
+        <!-- AI use: AI-assisted enchanted forest artwork.
+         What I did: Selected the image for my multimedia
+         portfolio, removed visible lettering, and exported
+         it in Canva as a 1600 x 900 JPG. -->
+         <img src="images/hero-3.jpg" class="slide-media" alt="Enchanted forest with glowing purple flowers, a resting deer, waterfalls, and a castle beneath a full moon." />
+      </div>
+
+      <!-- Text layer that sits on top of the slide images -->
+      <div class="hero-content">
+
+        <!-- Small pill-shaped badge above the headline -->
+        <span class="hero-eyebrow">ITE 170 · Multimedia Capstone · NOVA Annandale</span>
+
+        <!-- Holds the three headline/paragraph pairs; only the "active" one is visible,
+             and it changes together with the background slides -->
+        <div class="slide-text-wrapper">
+
+          <!-- Text for slide 1 (visible first) -->
+           <!-- AI use: ChatGPT (OpenAI), November 15, 2026.
+            Prompt: "Help me personalize the first slideshow description
+            for my ITE 170 multimedia portfolio."
+            What I did: I selected the wording for my portfolio
+            and added it to the existing HTML template. -->
+          <div class="slide-text active">
+            <!-- h1: the one main heading on this page (screen readers jump to it) -->
+            <h1>Kaylee Thomas</h1>
+            <p>Welcome to my creative portfolio! Explore my journey
+              through multimedia, from digital design and AI-generated
+              artwork to music, video, and web development.</p>
+          </div>
+
+          <!-- Text for slide 2 -->
+          <div class="slide-text">
+            <h2>Bringing Creativity to Life</h2>
+            <p>From creating my own music with Suno AI to producing
+              a cinematic video teaser and exploring digital art,
+              I've discovered new ways to express my creativity.</p>
+          </div>
+
+          <!-- Text for slide 3 -->
+          <div class="slide-text">
+            <h2>Turning Ideas into Designs</h2>
+            <p>Through creative poster design, my Midnight at the Museum
+              project, and Canva certifications, I've developed new
+              skills and discovered my passion for digital creativity.</p>
+          </div>
+
+        </div>
+
+        <!-- Two main action buttons under the hero text -->
+        <div class="hero-buttons">
+          <a href="about.html" class="btn-primary">About Me <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          <a href="projects.html"    class="btn-secondary">View My Projects</a>
+        </div>
+
+      </div>
+
+      <!-- The three small dot buttons at the bottom of the hero.
+           Clicking a dot jumps directly to that slide via goToSlide(n). -->
+      <div class="slide-dots" id="slideDots">
+        <button class="active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+        <button onclick="goToSlide(1)" aria-label="Slide 2"></button>
+        <button onclick="goToSlide(2)" aria-label="Slide 3"></button>
+      </div>
+
+    </section>
+
+
+    <!-- ================= CONTENT SECTION 1: "WHAT I CREATE" =================
+         Two-column feature section (image on the left, text on the right).
+         The "fade-up" class makes it animate into view as you scroll to it. -->
+    <section class="section white" id="about">
+      <div class="feature-inner fade-up">
+
+        <!-- Left column: placeholder screenshot image -->
+        <div class="feature-visual">
+          <img class="feature-img" src="images/creative-process.jpg"
+          alt="Creative workspace featuring a camera, microphone, headphones, clapperboard, and sketchbook with multimedia ideas."
+          loading="lazy" />
+        </div>
+
+        <!-- Right column: label, heading, description, and button -->
+        <div class="feature-text">
+          <span class="section-label">What I Create</span>
+          <h2 class="section-heading">Bringing My Ideas to Life</h2>
+          <p class="section-sub">
+          One of my favorite parts of this course has been exploring
+          different ways to express creativity through multimedia.
+          I created my original song, Choosing Us, using Suno AI
+          and produced a cinematic video teaser for my Midnight
+          at the Museum project. Both experiences taught me how
+          technology, storytelling, and creativity can come together
+          to bring an idea to life.
+        </p>
+          <a href="multimedia.html" class="btn-primary feature-btn">
+            See the Multimedia <i class="ph ph-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= CONTENT SECTION 2: "DESIGN & CERTIFICATES" =================
+         Same two-column layout, but the "reverse" class flips it so the
+         image appears on the RIGHT and the text on the LEFT, for variety. -->
+    <section class="section gray">
+      <div class="feature-inner reverse fade-up">
+
+        <!-- Image column -->
+        <div class="feature-visual">
+          <img class="feature-img" src="images/design-process.jpg"
+          alt="Creative design mood board with typography sketches, color swatches, museum imagery, and layout planning materials."
+          loading="lazy" />
+        </div>
+
+        <!-- Text column -->
+        <div class="feature-text">
+          <span class="section-label">Design</span>
+          <h2 class="section-heading">From Imagination to Creation</h2>
+          <p class="section-sub">
+            Throughout this course, I've explored graphic design
+            and learned how to transform creative ideas into
+            visual projects. One of my favorite experiences was
+            designing my Midnight at the Museum poster, where
+            I combined imagery, typography, and storytelling.
+            I also completed Canva Design School certifications,
+            which helped me strengthen my design skills and
+            become more confident in my creativity.
+          </p>
+          <a href="projects.html" class="btn-primary feature-btn">
+            Explore Projects <i class="ph ph-arrow-right" aria-hidden="true"></i>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= PROJECT CARDS SECTION: "MY PAGES" =================
+         A responsive grid of clickable cards, one for each page of the site.
+         Each card is one big <a> link containing a thumbnail image, a tag
+         badge, a title, and a short description. -->
+    <section class="section white" id="projects">
+
+      <!-- Section title row: label + heading on the left, "View all" link on the right -->
+      <div class="projects-header fade-up">
+        <div>
+          <span class="section-label">Explore the Site</span>
+          <h2 class="section-heading heading-tight">My Pages</h2>
+        </div>
+        <a href="projects.html" class="view-all">View all projects <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+      </div>
+
+      <!-- Grid container: cards automatically wrap to fit the screen width -->
+      <div class="project-grid">
+
+        <!-- Card 1: links to the About page -->
+        <a href="about.html" class="project-card fade-up">
+
+          <!-- Thumbnail area: image plus a small tag badge in the corner.
+               loading="lazy" tells the browser to wait to load the image
+               until it's about to scroll into view (faster page load). -->
+          <div class="card-thumb">
+            <img
+            src="images/about-card.png"
+            alt="Professional workspace with a laptop displaying HR technology icons, a notebook, and champagne-gold accents."
+            loading="lazy"
+            />
+            <span class="card-tag">About</span>
+          </div>
+
+          <!-- Card text: title and short description -->
+          <div class="card-body">
+            <h3>About Me</h3>
+
+            <p>Learn more about me, my creative journey, and the new skills I've developed through multimedia design, technology, and storytelling.</p>
+          </div>
+
+        </a>
+
+        <!-- Card 2: links to the Projects page -->
+        <a href="projects.html" class="project-card fade-up">
+          <div class="card-thumb">
+            <img
+              src="images/projects-card.png"
+              alt="Creative design workspace featuring a laptop, camera, notebook, and color palettes in midnight blue and champagne tones."
+              loading="lazy"
+            />
+          </div>
+          <div class="card-body">
+            <h3>Projects</h3>
+            <p>Explore my creative projects, including my Midnight at the Museum poster, Canva designs, and the skills I've developed throughout this course.</p>
+          </div>
+        </a>
+
+        <!-- Card 3: links to the Multimedia page -->
+        <a href="multimedia.html" class="project-card fade-up">
+          <div class="card-thumb">
+            <img
+              src="images/multimedia-card.png"
+              alt="Multimedia production workspace featuring headphones, a microphone, and a laptop displaying a video-editing timeline."
+            />
+          </div>
+          <div class="card-body">
+            <h3>Multimedia</h3>
+            <p>Discover my original song Choosing Us, my Midnight at the Museum video teaser, and the digital artwork I've created throughout this course.</p>
+          </div>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ================= CALL-TO-ACTION (CTA) BAND =================
+         Wide strip near the bottom inviting visitors to reach out.
+         The button goes to your Contact page. There is no mailto: link on purpose:
+         spam bots read every public page looking for email addresses. -->
+    <section class="cta-band" id="contact">
+      <div class="cta-inner fade-up">
+
+        <!-- Invitation heading and message -->
+        <div class="cta-text">
+          <h2>Let's Create Something Together!</h2>
+          <p>
+            Thank you for exploring my creative journey! Whether you're
+            interested in my multimedia projects, have feedback to share,
+            or simply want to connect, I'd love to hear from you.
+          </p>
+        </div>
+
+        <!-- Get in Touch button: opens the Contact page and its form -->
+        <a href="contact.html" class="btn-primary">
+          Get in Touch <i class="ph ph-arrow-right" aria-hidden="true"></i>
+        </a>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= FOOTER =================
+       Dark strip at the very bottom with the copyright line and course info. -->
+  <footer>
+    <p>© <strong>Kaylee Thomas</strong> · ITE 170 · Multimedia Capstone · NOVA Annandale</p>
+  </footer>
+
+  <!-- ================= JAVASCRIPT =================
+       All the page's interactive behavior:
+       1. The hero slideshow (auto-rotates every 4 seconds, dots jump to a slide)
+       2. Opening/closing the mobile navigation drawer
+       3. Closing the drawer with the Escape key
+       4. The scroll-triggered "fade-up" animation using IntersectionObserver -->
+  <script>
+
+    // --- Slideshow setup: grab all the pieces the slideshow needs ---
+
+    // All three background slide <div>s in the hero
+    const slides = document.querySelectorAll('.hero-slide');
+
+    // The three matching headline/paragraph text blocks
+    const slideTexts = document.querySelectorAll('.slide-text-wrapper .slide-text');
+
+    // The three dot buttons at the bottom of the hero
+    const dotButtons = document.querySelectorAll('#slideDots button');
+
+    // Index (0, 1, or 2) of the slide currently showing
+    let currentSlide = 0;
+
+    // Holds the timer ID so we can cancel/restart the auto-rotation
+    let slideTimer;
+
+    // Switches the slideshow to slide number n.
+    // It removes "active" from the current slide/text/dot, then adds
+    // "active" to the new ones — CSS handles the actual fade animation.
+    function goToSlide(n) {
+
+      slides[currentSlide].classList.remove('active');
+      slideTexts[currentSlide].classList.remove('active');
+      dotButtons[currentSlide].classList.remove('active');
+
+      currentSlide = n;
+
+      slides[currentSlide].classList.add('active');
+      slideTexts[currentSlide].classList.add('active');
+      dotButtons[currentSlide].classList.add('active');
+
+      // Restart the 4-second timer so a manual dot click doesn't
+      // cause the next auto-advance to happen too soon
+      startSlideTimer();
+    }
+
+    // Advances to the next slide. The % (remainder) math wraps
+    // back around to slide 0 after the last slide.
+    function nextSlide() {
+
+      goToSlide((currentSlide + 1) % slides.length);
+    }
+
+    // Reduce motion: if the visitor turned on "Reduce motion" in their
+    // computer's settings, the slides stay still. The dots still work.
+    const calmMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    // Starts (or restarts) the automatic rotation: a new slide every 4000 ms (4 seconds),
+    // unless the visitor asked for less motion
+    function startSlideTimer() {
+      clearInterval(slideTimer);
+      if (!calmMotion.matches) slideTimer = setInterval(nextSlide, 4000);
+    }
+
+    startSlideTimer();
+
+    // If the setting changes while the page is open, follow it
+    calmMotion.addEventListener('change', startSlideTimer);
+
+    // --- Mobile navigation drawer ---
+
+    // Opens the mobile menu: slides the drawer in, shows the dark overlay,
+    // and locks the page so it can't scroll behind the open menu
+    function openMobileNav() {
+
+      document.getElementById('mobileNav').classList.add('open');
+
+      document.getElementById('mobileOverlay').classList.add('show');
+
+      document.body.style.overflow = 'hidden';
+    }
+
+    // Closes the mobile menu: slides the drawer out, hides the overlay,
+    // and lets the page scroll again
+    function closeMobileNav() {
+
+      document.getElementById('mobileNav').classList.remove('open');
+
+      document.getElementById('mobileOverlay').classList.remove('show');
+
+      document.body.style.overflow = '';
+
+    }
+
+    // Keyboard shortcut: pressing the Escape key closes the mobile menu
+    // (good for accessibility and convenience)
+    document.addEventListener('keydown', function(e) {
+
+      if (e.key === 'Escape') closeMobileNav();
+    });
+
+    // --- Scroll animation ("fade-up" effect) ---
+
+    // IntersectionObserver watches elements and tells us when they
+    // scroll into the visible part of the screen
+    const observer = new IntersectionObserver(
+
+      // This runs whenever a watched element enters or leaves the screen
+      function(entries) {
+        entries.forEach(function(entry) {
+
+          // If the element is now on screen...
+          if (entry.isIntersecting) {
+
+            // ...add "visible", which triggers the CSS fade/slide-up animation
+            entry.target.classList.add('visible');
+
+            // Stop watching it — the animation only needs to play once
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+
+      {
+        // Fire when at least 10% of the element is visible
+        threshold: 0.1,
+
+        // Shrink the detection area by 40px at the bottom, so elements
+        // animate slightly AFTER they enter the screen (looks smoother)
+        rootMargin: '0px 0px -40px 0px'
+
+      }
+    );
+
+    // Find every element with the "fade-up" class and start watching it
+    document.querySelectorAll('.fade-up').forEach(function(el) {
+      observer.observe(el);
+
+    });
+
+  </script>
+
+</body>
+</html>

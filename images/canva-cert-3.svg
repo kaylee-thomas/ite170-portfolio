@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="990" viewBox="0 0 1400 990">
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4cc"/><stop offset="1" stop-color="#7d2ae8"/></linearGradient></defs>
+  <rect width="1400" height="990" fill="#ffffff"/>
+  <rect x="30" y="30" width="1340" height="930" fill="none" stroke="url(#g)" stroke-width="16" rx="24"/>
+  <text x="700" y="360" font-family="Helvetica, Arial, sans-serif" font-size="44" fill="#86868b" text-anchor="middle">Certificate placeholder 3</text>
+  <text x="700" y="480" font-family="Helvetica, Arial, sans-serif" font-size="64" font-weight="700" fill="#111111" text-anchor="middle">Create Scroll-Stopping Content</text>
+  <text x="700" y="600" font-family="Helvetica, Arial, sans-serif" font-size="34" fill="#86868b" text-anchor="middle">Replace with images/canva-cert-3.png</text>
+</svg>

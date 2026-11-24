@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ===== HEAD: page metadata and linked resources =====
+     This section is not visible on the page. It tells the browser
+     how to display the page and which outside files to load. -->
+<head>
+  <!-- Character encoding: lets the page display symbols like é, →, © correctly -->
+  <meta charset="UTF-8" />
+  <!-- Viewport tag: makes the page scale properly on phones and tablets (responsive design) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Text shown in the browser tab and in search results -->
+  <title>Contact – Kaylee Thomas</title>
+
+  <!-- Link to the external stylesheet that styles this page -->
+  <link rel="stylesheet" href="css/contact.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+  <!-- Loads the Phosphor icon library (used for the envelope, LinkedIn, etc. icons) -->
+  <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.2"></script>
+</head>
+
+<body>
+
+  <!-- ===== HEADER / DESKTOP NAVBAR =====
+       Fixed bar at the top of every page: site name (brand) on the left,
+       navigation links on the right. The hamburger button only appears
+       on small screens (CSS hides it on desktop). -->
+  <header>
+    <!-- Site logo/brand — clicking it returns to the home page -->
+    <a class="brand" href="index.html">Kaylee<span>Thomas</span></a>
+    <!-- Main navigation links (shown on desktop only) -->
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html">Projects</a>
+      <a href="multimedia.html">Multimedia</a>
+      <!-- "active" class highlights the page you are currently on -->
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <!-- Hamburger button (mobile only) — clicking it opens/closes the slide-in menu below -->
+    <button class="mobile-toggle" aria-label="Open menu" onclick="toggleMobileNav()"><span></span></button>
+  </header>
+
+  <!-- ===== MOBILE NAVIGATION =====
+       Slide-in menu for phones/tablets. It sits off-screen until the
+       hamburger button adds the "open" class (see the script at the bottom).
+       Each link also closes the menu after it is tapped. -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html"      onclick="toggleMobileNav()">Home</a>
+    <a href="about.html"      onclick="toggleMobileNav()">About</a>
+    <a href="projects.html"   onclick="toggleMobileNav()">Projects</a>
+    <a href="multimedia.html" onclick="toggleMobileNav()">Multimedia</a>
+    <a href="contact.html" class="active" onclick="toggleMobileNav()">Contact</a>
+  </nav>
+
+  <!-- ===== MAIN PAGE CONTENT =====
+       padding-top:64px pushes the content down so the fixed header
+       doesn't cover the top of the page. -->
+  <main class="page-main">
+
+    <!-- ===== HERO SECTION =====
+         Big dark banner at the top of the page with a background image
+         and the page title. -->
+    <section class="page-hero hero-image">
+
+      <!-- Background photo for the hero. alt="" + aria-hidden="true" tell
+           screen readers to skip it because it is decorative only. -->
+      <img
+      class="page-hero-media"
+      src="images/contact-hero.png"
+      alt="Elegant dark workspace featuring a notebook, flowers, candle, and laptop with warm golden lighting."
+      aria-hidden="true" />
+
+      <!-- Text that sits on top of the hero image -->
+      <div class="page-hero-content">
+        <span class="page-hero-eyebrow">GET IN TOUCH</span>
+        <h1>Contact Me</h1>
+        <p>Have a question about my projects, interested in collaborating, or simply want to connect? I'd love to hear from you!</p>
+      </div>
+    </section>
+
+    <!-- ===== CONTACT SECTION =====
+         Two-column layout: contact info cards on the left,
+         the message form on the right. "fade-up" elements animate
+         into view as you scroll (see the IntersectionObserver script). -->
+    <section class="contact-section">
+      <div class="contact-inner">
+
+        <!-- LEFT COLUMN: intro text + three "contact method" cards -->
+        <div class="contact-info fade-up">
+          <div>
+            <span class="section-label">Contact</span>
+            <h2>Let's connect</h2>
+            <p>
+              Whether you have a question about my multimedia projects,
+              want to discuss technology and creativity, or are interested
+              in connecting professionally, I'd love to hear from you.
+              Feel free to send me a message using the contact form!
+            </p>
+          </div>
+
+          <!-- Contact card: points to the form. There is NO email address here on purpose.
+               Spam bots scan web pages for addresses; the form (Formspree) emails you
+               without your address ever appearing in your code. -->
+          <div class="contact-method">
+            <div class="method-icon"><i class="ph ph-envelope" aria-hidden="true"></i></div>
+            <div class="method-info">
+              <div class="method-type">Message</div>
+              <div class="method-value">
+                <a href="#contactForm">Send me a message <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contact card: school / course info -->
+          <div class="contact-method">
+            <div class="method-icon"><i class="ph ph-graduation-cap" aria-hidden="true"></i></div>
+            <div class="method-info">
+              <div class="method-type">Institution</div>
+              <div class="method-value">Northern Virginia Community College (NOVA) · Information Technology</div>
+            </div>
+          </div>
+
+          <!-- Contact card: LinkedIn profile. target="_blank" opens a new tab;
+               rel="noopener" is a security best practice for new-tab links. -->
+          <div class="contact-method">
+            <div class="method-icon"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></div>
+            <div class="method-info">
+              <div class="method-type">LinkedIn</div>
+              <div class="method-value">
+                <a href="https://www.linkedin.com/in/kaylee-t-291a43177/" target="_blank" rel="noopener">My LinkedIn profile <i class="ph ph-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: the contact form card -->
+        <div class="contact-form-wrap fade-up">
+          <div class="form-title">Send a message</div>
+          <div class="form-subtitle">Fill out the form and I'll get back to you shortly.</div>
+
+          <!-- THE CONTACT FORM
+               action  = the Formspree URL the message is sent to
+                         (replace YOUR_FORM_ID with a real Formspree ID)
+               method  = POST sends the data in the request body
+               onsubmit = runs our JavaScript instead of a normal page reload
+               novalidate = turns off the browser's built-in checks so our
+                            own JavaScript validation runs instead -->
+          <form id="contactForm"
+                action="https://formspree.io/f/mgakpyyw"
+                method="POST"
+                onsubmit="handleSubmit(event)" novalidate>
+
+            <!-- Spam trap ("honeypot"). People never see this box, but spam robots fill in
+                 every box they find. Formspree throws away any message where _gotcha has
+                 text in it, so robot spam never reaches your inbox. Leave it exactly as is. -->
+            <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none">
+
+            <!-- First and last name side by side (two-column grid row) -->
+            <div class="form-row">
+              <div class="form-group">
+                <!-- "for" matches the input's id so clicking the label focuses the box -->
+                <label for="firstName">First Name *</label>
+                <!-- required = must be filled in; autocomplete helps the browser suggest the value -->
+                <input type="text" id="firstName" name="firstName"
+                       placeholder="Sarah" required autocomplete="given-name"/>
+              </div>
+              <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName"
+                       placeholder="Lin" required autocomplete="family-name"/>
+              </div>
+            </div>
+
+            <!-- Email field — type="email" brings up the email keyboard on phones -->
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email"
+                     placeholder="you@example.com" required autocomplete="email"/>
+            </div>
+
+            <!-- Drop-down menu asking why the visitor is writing (optional) -->
+            <div class="form-group">
+              <label for="subject">What's this about?</label>
+              <select id="subject" name="subject">
+                <option value="">— Select a topic —</option>
+                <option value="feedback">Project feedback</option>
+                <option value="collaborate">Collaboration opportunity</option>
+                <option value="employer">Employer / hiring inquiry</option>
+                <option value="class">ITE 170 classmate</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <!-- Multi-line text box for the visitor's message -->
+            <div class="form-group">
+              <label for="message">Message *</label>
+              <textarea id="message" name="message"
+                        placeholder="Tell me what's on your mind..." required></textarea>
+            </div>
+
+            <!-- Submit button — clicking it triggers handleSubmit() above -->
+            <button type="submit" class="btn-submit">
+              Send Message <i class="ph ph-arrow-right" aria-hidden="true"></i>
+            </button>
+
+          </form>
+
+          <!-- Success message — hidden by default; JavaScript shows it
+               (and hides the form) after the message is sent. -->
+          <div class="success-message" id="successMsg">
+            <h3>✅ Message sent!</h3>
+            <p>Thank you for reaching out. I'll get back to you soon.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SOCIAL LINKS SECTION =====
+         Pill-shaped buttons linking to social media profiles. -->
+    <section class="social-section">
+      <div class="social-inner fade-up">
+        <span class="section-label">Find Me Online</span>
+        <h2>Connect on social</h2>
+        <p>Follow my work, see what I'm building, and stay in touch.</p>
+
+        <div class="social-links">
+
+          <!-- LinkedIn button (add more social-link anchors here for other sites) -->
+          <a href="https://www.linkedin.com/in/kaylee-t-291a43177/" class="social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <span class="social-link-icon"><i class="ph ph-linkedin-logo" aria-hidden="true"></i></span>
+            My LinkedIn profile
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA (CALL-TO-ACTION) BAND =====
+         A closing strip that thanks the visitor and points them
+         to the rest of the portfolio. -->
+    <section class="cta-band">
+      <div class="cta-inner cta-centered fade-up">
+        <div class="cta-text">
+          <h2>
+            <i class="ph ph-sparkle" aria-hidden="true" style="color: #C5A46D; margin-right: 8px;"></i>
+            Thanks for Stopping By!
+          </h2>
+          <p>Thank you for exploring my creative portfolio! I hope you enjoyed
+            seeing the projects I've created throughout ITE 170.
+            Feel free to reach out or explore more of my work!.
+          </p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER =====
+       Copyright line shown at the very bottom of every page. -->
+  <footer>
+    <p>© Kaylee Thomas · ITE 170 · Multimedia Capstone · NOVA Annandale</p>
+  </footer>
+
+  <!-- ===== JAVASCRIPT =====
+       All the page's behavior: the mobile menu, form validation and
+       submission, and the scroll-in fade animations. -->
+  <script>
+
+    // ----- MOBILE MENU -----
+    // Adds/removes the "open" class on the slide-in menu.
+    // The CSS uses that class to slide the menu in from the right.
+    function toggleMobileNav() {
+      document.getElementById("mobileNav").classList.toggle("open");
+    }
+    // Close the mobile menu if the user clicks anywhere OUTSIDE
+    // the menu and the hamburger button.
+    document.addEventListener("click", function(e) {
+      const nav = document.getElementById("mobileNav");
+      const toggle = document.querySelector(".mobile-toggle");
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) nav.classList.remove("open");
+    });
+
+    // ----- FORM SUBMISSION -----
+    // Runs when the visitor clicks "Send Message".
+    // "async" lets us use "await" for the network request below.
+    async function handleSubmit(e) {
+      // Stop the browser's default behavior (reloading the page)
+      e.preventDefault();
+
+      // Grab the form element so we can read and send its data
+      const form = document.getElementById("contactForm");
+
+      // Read the required fields; .trim() removes accidental spaces
+      const firstName = document.getElementById("firstName").value.trim();
+      const email     = document.getElementById("email").value.trim();
+      const message   = document.getElementById("message").value.trim();
+
+      // Validation step 1: make sure no required field is empty
+      if (!firstName || !email || !message) {
+        alert("Please fill in all required fields (marked with *).");
+        return; // stop here — don't send the form
+      }
+      // Validation step 2: check the email looks like "something@something.something"
+      // using a regular expression (a text-matching pattern)
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(email)) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+
+      // Helper: hide the form, show the green success box, and clear the fields
+      const showSuccess = () => {
+        form.style.display = "none";
+        document.getElementById("successMsg").classList.add("show");
+        form.reset();
+      };
+
+      // Demo mode: if the Formspree ID hasn't been filled in yet,
+      // just pretend the send worked so the page can be tested.
+      if (form.action.includes("YOUR_FORM_ID")) {
+        showSuccess();
+        return;
+      }
+
+      // Real send: POST the form data to Formspree without reloading the page.
+      // try/catch handles the case where the network request fails.
+      try {
+        const res = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),               // packages all form fields
+          headers: { "Accept": "application/json" } // ask Formspree for a JSON reply
+        });
+        if (res.ok) showSuccess();                // success — show the thank-you box
+        else alert("Sorry — something went wrong. Please try again in a few minutes.");
+      } catch (err) {
+        // Runs if the request couldn't reach the server at all (e.g. no internet)
+        alert("Network error. Please check your connection and try again.");
+      }
+    }
+
+    // ----- SCROLL-IN ANIMATIONS -----
+    // An IntersectionObserver watches elements and tells us when they
+    // scroll into view. When a ".fade-up" element appears on screen,
+    // we add the "visible" class (CSS fades it in and slides it up),
+    // then stop watching it so the animation only happens once.
+    const observer = new IntersectionObserver(
+      function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+        });
+      },
+      // threshold: trigger when 8% of the element is visible
+      // rootMargin: shrink the trigger area by 40px at the bottom
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+    // Start watching every element that has the "fade-up" class
+    document.querySelectorAll(".fade-up").forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>

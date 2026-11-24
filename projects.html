@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- ============================================================
+     HEAD: page metadata and resources
+     This section is not visible on the page. It tells the browser
+     how to display the page, sets the browser-tab title, and loads
+     the stylesheet and the Phosphor icon library.
+     ============================================================ -->
+<head>
+  <!-- Character encoding so all text/symbols display correctly -->
+  <meta charset="UTF-8" />
+  <!-- Makes the page scale properly on phones and tablets (responsive design) -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Text shown in the browser tab -->
+  <title>Projects | Kaylee Thomas</title>
+
+  <!-- Links the external stylesheet that styles this page -->
+   <!-- Google Fonts: DM Sans and Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+
+  <link rel="stylesheet" href="css/projects.css" />
+  <!-- Loads the Phosphor icon font (used for arrow and star icons below) -->
+  <script defer src="https://unpkg.com/@phosphor-icons/web@2.1.2"></script>
+</head>
+
+<body>
+
+  <!-- ============================================================
+       HEADER / DESKTOP NAVBAR
+       Fixed bar at the top of every page. Contains the site brand
+       (logo text linking home), the desktop navigation links, and
+       a hamburger button that only appears on small screens.
+       ============================================================ -->
+  <header>
+    <!-- Brand/logo text; clicking it returns to the home page -->
+    <a class="brand" href="index.html">Kaylee<span>Thomas</span></a>
+    <!-- Main navigation links (hidden on mobile via CSS).
+         "active" marks the current page so it can be highlighted. -->
+    <nav class="desktop-nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="projects.html" class="active">Projects</a>
+      <a href="multimedia.html">Multimedia</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <!-- Hamburger button (mobile only). Clicking it runs the
+         toggleMobileNav() JavaScript function to open/close the menu.
+         The empty <span> is drawn as the three hamburger lines by CSS. -->
+    <button class="mobile-toggle" aria-label="Open menu" onclick="toggleMobileNav()"><span></span></button>
+  </header>
+
+  <!-- ============================================================
+       MOBILE NAVIGATION DRAWER
+       A slide-in menu for phones/tablets. It sits off-screen until
+       JavaScript adds the "open" class. Each link also closes the
+       menu when tapped (onclick="toggleMobileNav()").
+       ============================================================ -->
+  <nav class="mobile-nav" id="mobileNav">
+    <a href="index.html"      onclick="toggleMobileNav()">Home</a>
+    <a href="about.html"      onclick="toggleMobileNav()">About</a>
+    <a href="projects.html" class="active" onclick="toggleMobileNav()">Projects</a>
+    <a href="multimedia.html" onclick="toggleMobileNav()">Multimedia</a>
+    <a href="contact.html"    onclick="toggleMobileNav()">Contact</a>
+  </nav>
+
+  <!-- ============================================================
+       MAIN CONTENT
+       Everything between the header and footer. The inline
+       padding-top pushes content down so it isn't hidden behind
+       the 64px fixed header.
+       ============================================================ -->
+  <main class="page-main">
+
+    <!-- ------------------------------------------------------------
+         PAGE HERO
+         Large dark banner at the top of the page with a background
+         image, an "eyebrow" label, the page title, and a subtitle.
+         ------------------------------------------------------------ -->
+    <section class="page-hero hero-image">
+
+      <!-- Full-bleed background image for the hero. It is decorative,
+           so alt="" and aria-hidden="true" hide it from screen readers.
+           (Currently a placeholder image — swap in your own.) -->
+      <img
+        class="page-hero-media"
+        src="images/projects-hero.jpg"
+        alt="Dark creative workspace featuring a camera, sketchbook, drawing tablet, and warm champagne-gold lighting against a midnight-blue background."" />
+
+      <!-- Text that sits on top of the hero image -->
+      <div class="page-hero-content">
+        <!-- Small uppercase label above the heading -->
+       <span class="page-hero-eyebrow">My Creative Journey</span>
+       <h1>My Projects</h1>
+       <p>Explore my multimedia creations, from visual storytelling and digital design to the creative skills I've developed throughout ITE 170.</p>
+      </div>
+    </section>
+    <!-- AI-generated image credit -->
+
+    <!-- ------------------------------------------------------------
+         PROJECTS GRID
+         The main gallery of project cards. CSS Grid lays the cards
+         out in responsive columns. Each card has a thumbnail image,
+         a title, a description, and small "tech tag" pills.
+         ------------------------------------------------------------ -->
+    <section class="projects-section">
+      <div class="projects-grid" id="projectsGrid">
+
+        <!-- PROJECT CARD 1: Poster (design project).
+             "card-poster" makes the image fill the whole card with the
+             text overlaid at the bottom; "fade-up" animates it into
+             view as you scroll (see the script at the bottom). -->
+        <div class="project-card card-poster fade-up" data-category="design">
+          <!-- Thumbnail image area. loading="lazy" tells the browser to
+               wait to download the image until it's about to be seen. -->
+          <div class="card-thumb thumb-image">
+             <img class="thumb-media"
+             src="images/unplug-and-reset.png"
+             alt="Unplug and Reset wellness poster with illustrations encouraging screen breaks, movement, and rest"
+             loading="lazy" />
+          </div>
+          <!-- Card text: title, description, and skill tags -->
+          <div class="card-body">
+            <h3>Unplug and Reset</h3>
+            <p>
+              I created this wellness poster to encourage people to
+              take breaks from their screens and prioritize their
+              well-being. Using simple illustrations, bold typography,
+              and a clean layout, I highlighted three ways to reset:
+              looking away, moving around, and taking time to refocus.
+            </p>
+            <!-- Small pill labels listing the skills/tools used -->
+            <div class="card-tags">
+              <span class="tech-tag">Design</span>
+              <span class="tech-tag">Typography</span>
+              <span class="tech-tag">Layout</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROJECT CARD 2: Midterm Exam (HTML/CSS project) -->
+        <div class="project-card card-poster fade-up" data-category="multimedia">
+          <div class="card-thumb thumb-image">
+            <img class="thumb-media"
+                 src="images/museum-poster.png"
+                 alt="Midnight at the Museum promotional poster created for my ITE 170 midterm project" />
+          </div>
+          <div class="card-body">
+            <h3>Midnight at the Museum </h3>
+            <p>
+              For my ITE 170 midterm, I created a museum-themed
+              multimedia project featuring a promotional poster
+              and video teaser. I combined AI-generated imagery,
+              storytelling, and video editing to bring the
+              mysterious museum concept to life.
+            </p>
+            <div class="card-tags">
+              <span class="tech-tag">Multimedia</span>
+              <span class="tech-tag">Image Editing</span>
+              <span class="tech-tag">Design</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         CANVA CERTIFICATIONS
+         A row of three certificate cards. Each card shows the
+         certificate image, its name, the issuer, and a link that
+         opens the full-size certificate in a new tab.
+         To use your real certificates: export each one from Canva as
+         a PNG, save it in the images/ folder, and change both the
+         <img> src and the link href to the new file name.
+         ------------------------------------------------------------ -->
+    <section class="cert-section" id="certifications">
+      <div class="cert-inner">
+
+        <!-- Section heading -->
+        <div class="cert-header fade-up">
+          <span class="section-label">Certifications</span>
+          <h2>Canva Design School</h2>
+          <p>Three certificates earned through Canva Design School.</p>
+        </div>
+
+        <!-- Grid of three certificate cards -->
+        <div class="cert-grid">
+
+          <!-- CERTIFICATE 1 -->
+          <article class="cert-card fade-up">
+            <!-- Clicking the image opens the full certificate -->
+            <a class="cert-image" href="images/canva-certificate-1.png" target="_blank" rel="noopener">
+              <img src="images/canva-certificate-1.png" alt="Canva Essentials certificate" loading="lazy" />
+            </a>
+            <div class="cert-body">
+              <div class="cert-issuer"><i class="ph ph-certificate" aria-hidden="true"></i> Canva Design School</div>
+              <h3>Canva Essentials</h3>
+              <p class="cert-date">Completed: August 2026</p>
+              <a class="cert-link" href="images/canva-certificate-1.png" target="_blank" rel="noopener">
+                View certificate <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- CERTIFICATE 2 -->
+          <article class="cert-card fade-up">
+            <a class="cert-image" href="images/canva-certificate-2.png" target="_blank" rel="noopener">
+              <img src="images/canva-certificate-2.png" alt="Meet Canva's Visual Suite certificate" loading="lazy" />
+            </a>
+            <div class="cert-body">
+              <div class="cert-issuer"><i class="ph ph-certificate" aria-hidden="true"></i> Canva Design School</div>
+              <h3>Meet Canva's Visual Suite</h3>
+              <p class="cert-date">Completed: September 2026</p>
+              <a class="cert-link" href="images/canva-certificate-2.png" target="_blank" rel="noopener">
+                View certificate <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- CERTIFICATE 3 -->
+          <article class="cert-card fade-up">
+            <a class="cert-image" href="images/canva-certificate-3.png" target="_blank" rel="noopener">
+              <img src="images/canva-certificate-3.png" alt="Create Scroll-Stopping Content certificate from Canva Design School" loading="lazy" />
+            </a>
+            <div class="cert-body">
+              <div class="cert-issuer"><i class="ph ph-certificate" aria-hidden="true"></i> Canva Design School</div>
+              <h3>Create Scroll-Stopping Content</h3>
+              <p class="cert-date">Completed: September 2026</p>
+              <a class="cert-link" href="images/canva-certificate-3.png" target="_blank" rel="noopener">
+                View certificate <i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         FEATURED PROJECT
+         A spotlight section for one "best" project: a large image on
+         the left and text on the right (two-column grid on desktop,
+         stacked on mobile). Includes a badge, description, a bullet
+         list of outcomes, and a call-to-action button.
+         ------------------------------------------------------------ -->
+    <section class="featured-project">
+      <div class="featured-inner fade-up">
+
+        <!-- Left column: large screenshot/image of the project -->
+        <div class="featured-visual">
+          <img src="images/showcase-video2.png" alt="Screenshot from my ITE 170 Multimedia Showcase Video" />
+        </div>
+
+        <!-- Right column: text about the featured project -->
+        <div class="featured-text">
+          <!-- Small gradient badge with a star icon -->
+          <div class="featured-badge"><i class="ph-fill ph-star" aria-hidden="true"></i> Capstone Project</div>
+
+          <h2>My Multimedia Showcase Video</h2>
+
+          <p>
+            For my ITE 170 video project, I created a multimedia
+            showcase that brought together my creative work from
+            the semester. I wanted to tell a story about creativity,
+            personal growth, and how different forms of multimedia
+            can come together to express ideas. Rather than creating
+            a simple slideshow, I wanted my video to feel engaging
+            and meaningful through music, visuals, and storytelling.
+
+            One of the biggest challenges was learning how to bring
+            different elements together while maintaining a smooth
+            flow between scenes. Through this project, I developed
+            a greater appreciation for video editing, timing, and
+            visual presentation. What I'm most proud of is seeing
+            my creative work come together into one presentation
+            that reflects the skills I've developed throughout
+            ITE 170.
+          </p>
+
+          <!-- Checkmark list of accomplishments (the ✓ comes from CSS) -->
+          <ul class="outcomes">
+            <li>Developed a creative concept to showcase my multimedia work</li>
+            <li>Combined visuals and music to create an engaging presentation</li>
+            <li>Practiced video editing, scene transitions, and timing in Canva</li>
+            <li>Strengthened my storytelling and multimedia design skills</li>
+          </ul>
+
+          <!-- Button linking to the song, video, and images -->
+          <div class="featured-actions">
+            <a href="media/multimedia-showcase.mp4" class="btn-primary" target="_blank" rel="noopener">Watch My Showcase Video <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------
+         CALL-TO-ACTION (CTA) BAND
+         A strip near the bottom of the page inviting visitors to
+         view the Multimedia page, with a heading, short text, and
+         a button.
+         ------------------------------------------------------------ -->
+    <section class="cta-band">
+      <div class="cta-inner fade-up">
+        <div class="cta-text">
+          <h2>Want to see my multimedia work?</h2>
+          <p>My Suno song, video, and the images I created this semester.</p>
+        </div>
+        <a href="multimedia.html" class="btn-primary">Explore Multimedia <i class="ph ph-arrow-right" aria-hidden="true"></i></a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================
+       FOOTER
+       Simple black bar with the copyright line, shown on every page.
+       ============================================================ -->
+  <footer>
+    <p>© Kaylee Thomas · ITE 170 · Multimedia Capstone · NOVA Annandale</p>
+  </footer>
+
+  <!-- ============================================================
+       JAVASCRIPT
+       Two behaviors: (1) open/close the mobile menu, and
+       (2) fade elements in as they scroll into view.
+       ============================================================ -->
+  <script>
+
+    // Opens or closes the mobile navigation drawer.
+    // classList.toggle() adds the "open" class if it's missing and
+    // removes it if it's there — the CSS slides the menu in/out.
+    function toggleMobileNav() {
+      document.getElementById("mobileNav").classList.toggle("open");
+    }
+    // Closes the mobile menu when you click anywhere OUTSIDE it.
+    // "e.target" is the element that was clicked; if the click was not
+    // inside the menu or on the hamburger button, remove "open".
+    document.addEventListener("click", function(e) {
+      const nav = document.getElementById("mobileNav");
+      const toggle = document.querySelector(".mobile-toggle");
+      if (!nav.contains(e.target) && !toggle.contains(e.target)) nav.classList.remove("open");
+    });
+
+    // Scroll animation: an IntersectionObserver watches elements and
+    // reports when they scroll into the visible part of the screen.
+    const observer = new IntersectionObserver(
+      function(entries) {
+        entries.forEach(function(entry) {
+          // When an element becomes visible, add the "visible" class
+          // (which triggers the CSS fade/slide-up animation), then
+          // stop watching it so the animation only happens once.
+          if (entry.isIntersecting) { entry.target.classList.add("visible"); observer.unobserve(entry.target); }
+        });
+      },
+      // threshold: 0.08 = fire when 8% of the element is visible.
+      // rootMargin shrinks the bottom edge by 40px so elements must
+      // scroll a little further into view before animating.
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
+    );
+    // Find every element with the "fade-up" class and start watching it.
+    document.querySelectorAll(".fade-up").forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>
